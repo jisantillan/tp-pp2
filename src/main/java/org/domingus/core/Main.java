@@ -1,4 +1,4 @@
-package org.domingus;
+package org.domingus.core;
 
 public class Main {
     public static void main(String[] args) {
