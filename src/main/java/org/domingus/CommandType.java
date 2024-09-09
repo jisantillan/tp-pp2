@@ -1,5 +1,5 @@
 package org.domingus;
 
 public enum CommandType {
-    CONTACT, FILES
+    CONTACT, FILES, NOTIFICATION;
 }
