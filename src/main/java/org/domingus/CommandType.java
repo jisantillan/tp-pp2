@@ -1,4 +1,4 @@
-package org.domingus.core.utils;
+package org.domingus;
 
 public enum CommandType {
     CONTACT, FILES
