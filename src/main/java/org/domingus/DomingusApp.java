@@ -1,6 +1,6 @@
 package org.domingus;
 
-public class Main {
+public class DomingusApp {
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
