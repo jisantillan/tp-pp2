@@ -1,16 +1,17 @@
 package org.domingus.config;
 
+import org.domingus.app.AcademicOffer;
 import org.domingus.polling.Data;
 
 public class DomingusConfiguration {
 
-    private Data defaultData;
+    private AcademicOffer defaultData;
     private Integer timerInterval;
 
     public DomingusConfiguration() {
     }
 
-    public DomingusConfiguration(Data defaultData, Integer timerInterval) {
+    public DomingusConfiguration(AcademicOffer defaultData, Integer timerInterval) {
         this.defaultData = defaultData;
         this.timerInterval = timerInterval;
     }
@@ -23,7 +24,7 @@ public class DomingusConfiguration {
         return timerInterval;
     }
 
-    public void setDefaultData(Data defaultData) {
+    public void setDefaultData(AcademicOffer defaultData) {
         this.defaultData = defaultData;
     }
 

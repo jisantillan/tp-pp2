@@ -2,9 +2,10 @@ package org.domingus.polling;
 
 import org.domingus.interfaces.Comparable;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Data implements Comparable {
+public abstract class Data implements Comparable {
     private String name;
     private String url;
     private String date;

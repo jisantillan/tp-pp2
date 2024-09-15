@@ -1,28 +1,24 @@
 package org.domingus.polling;
 
-import org.domingus.interfaces.Comparable;
+import org.domingus.interfaces.ChangeInform;
 import org.domingus.interfaces.Observable;
 import org.domingus.interfaces.Observer;
-import org.domingus.interfaces.Runnable;
 
 import java.util.List;
 
 
-public class ChangeDetector implements Runnable, Observable {
-
-    private void detectChanges(Comparable comparable, Comparable other){
-        notifyObservers(comparable.detectChanges(other));
-    }
+public class ChangeDetector implements ChangeInform, Observable {
 
     @Override
-    public void run(Object object, Object other) {
-        detectChanges((Comparable) object, (Comparable) other);
+    public void inform(Data data, Data data2) {
+        List<String> changes = detectChanges(data,data2);
+        notifyObservers(changes);
     }
 
-    @Override
-    public void run(Object object) {
-
+    private List<String> detectChanges(Data data, Data data2) {
+        return data.detectChanges(data2);
     }
+
 
     @Override
     public void addObserver(Observer observer) {
