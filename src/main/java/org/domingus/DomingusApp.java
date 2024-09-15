@@ -1,5 +1,6 @@
 package org.domingus;
 
+import org.domingus.app.AcademicOffer;
 import org.domingus.app.Notifier;
 import org.domingus.polling.*;
 
@@ -7,7 +8,7 @@ public class DomingusApp {
     public static void main(String[] args) throws InterruptedException {
         Notifier notifier = new Notifier();
 
-        Data data = new Data("AcademicOffer", "www.blabla", "dateMock");
+        Data data = new AcademicOffer("AcademicOffer", "www.blabla", "dateMock");
 
         ChangeDetector changeDetector = new ChangeDetector();
         changeDetector.addObserver(notifier);
