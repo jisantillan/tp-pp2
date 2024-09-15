@@ -1,24 +1,22 @@
-package org.domingus.app;
+package org.domingus.polling;
 
 import org.domingus.interfaces.Observable;
 import org.domingus.interfaces.Observer;
 
 import java.util.List;
 
-public class Notifier implements Observer, Observable {
+public class Timer implements Observable {
+    private Integer timeInterval;
 
-    public Notifier(){
-
+    public Timer(Integer timeInterval){
+        this.timeInterval = timeInterval;
     }
 
-    @Override
-    public void update(List<String> arg) {
-        notifyObservers(arg);
-    }
-
-    @Override
-    public void update() {
-
+    public void start() throws InterruptedException { //TODO revisar si debe ser privado
+        while (true) {
+            Thread.sleep(this.timeInterval);
+            notifyObservers();
+        }
     }
 
     @Override
@@ -38,8 +36,6 @@ public class Notifier implements Observer, Observable {
 
     @Override
     public void notifyObservers(List<String> list) {
-        MessageGenerator messageGenerator = new MessageGenerator(list);
-        observers.forEach((observer -> messageGenerator.generateMessage()));
-        System.out.println("se notifico a la UI");
+
     }
 }
