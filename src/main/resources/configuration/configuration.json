@@ -1,0 +1,8 @@
+{
+  "defaultData": {
+    "name": "AcademicOffer",
+    "url": "www.blabla.com",
+    "date": "fecha"
+  },
+  "timerInterval": 2000
+}

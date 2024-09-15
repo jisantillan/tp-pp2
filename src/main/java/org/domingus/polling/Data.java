@@ -9,6 +9,9 @@ public class Data implements Comparable {
     private String url;
     private String date;
 
+    public Data() {
+    }
+
     public Data(String name, String url, String date) {
         this.name = name;
         this.url = url;
@@ -18,5 +21,17 @@ public class Data implements Comparable {
     @Override
     public List<String> detectChanges(Comparable other) {
         return null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

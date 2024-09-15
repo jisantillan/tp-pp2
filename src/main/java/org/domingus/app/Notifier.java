@@ -7,9 +7,7 @@ import java.util.List;
 
 public class Notifier implements Observer, Observable {
 
-    public Notifier(){
-
-    }
+    public Notifier(){}
 
     @Override
     public void update(List<String> arg) {
