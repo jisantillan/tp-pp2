@@ -4,27 +4,25 @@ import org.domingus.app.AcademicOffer;
 import org.domingus.interfaces.Observer;
 import org.domingus.interfaces.VersionUpdater;
 
-import java.util.List;
+import java.net.URL;
 
 public class DataFetcher implements Observer {
 
-    private Data data;
     private VersionUpdater versionUpdater ;
-    public DataFetcher(VersionUpdater versionUpdater, Data data){
+    public DataFetcher(VersionUpdater versionUpdater, URL url){
         this.versionUpdater = versionUpdater;
-        this.data = data;
     }
 
     private Data fetchData(){
-        //TODO resolve data
-        return new AcademicOffer("mockName", "mockUrl", "mockDate");
-    }
-    @Override
-    public void update(List<String> arg) {
+        //TODO resolve data url
+        return new AcademicOffer("AcademicOffer",  "newDate");
     }
 
     @Override
-    public void update() {
+    public void update(Object arg) {
         this.versionUpdater.updateVersion(fetchData());
     }
 }
+
+
+

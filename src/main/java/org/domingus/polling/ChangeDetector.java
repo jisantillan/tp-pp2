@@ -5,17 +5,24 @@ import org.domingus.interfaces.Observable;
 import org.domingus.interfaces.Observer;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class ChangeDetector implements ChangeInform, Observable {
 
     @Override
     public void inform(Data data, Data data2) {
-        List<String> changes = detectChanges(data,data2);
-        notifyObservers(changes);
+        if (hasDifferences(data, data2)) {
+            Map<String, List<String>> changes = detectChanges(data, data2);
+            notifyObservers(changes);
+        }
     }
 
-    private List<String> detectChanges(Data data, Data data2) {
+    private boolean hasDifferences(Data data , Data data2){
+        return data.hasChanges(data2) && data.sameName(data2);
+    }
+
+    private Map<String,List<String>> detectChanges(Data data, Data data2) {
         return data.detectChanges(data2);
     }
 
@@ -31,13 +38,13 @@ public class ChangeDetector implements ChangeInform, Observable {
     }
 
     @Override
-    public void notifyObservers() {
-        observers.forEach((observer -> observer.update()));
+    public void notifyObservers(Object arg) {
+        if (arg instanceof Map) {
+            Map<String,List<String>> changes = (Map<String,List<String>>) arg;
+            observers.forEach((observer -> observer.update(changes)));
+        }
+
     }
 
-    @Override
-    public void notifyObservers(List<String> changes) {
-        observers.forEach((observer -> observer.update(changes)));
-    }
 
 }

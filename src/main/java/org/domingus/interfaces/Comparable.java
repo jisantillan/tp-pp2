@@ -1,7 +1,9 @@
 package org.domingus.interfaces;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Comparable {
-    List<String> detectChanges(Comparable other);
+    Map<String,List<String>> detectChanges(Comparable other);
+    boolean hasChanges(Comparable other);
 }

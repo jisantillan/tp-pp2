@@ -4,20 +4,20 @@ import org.domingus.interfaces.Observable;
 import org.domingus.interfaces.Observer;
 
 import java.util.List;
+import java.util.Map;
 
 public class Notifier implements Observer, Observable {
 
     public Notifier(){}
 
     @Override
-    public void update(List<String> arg) {
-        notifyObservers(arg);
+    public void update(Object arg) {
+        if (arg instanceof Map) {
+            Map<String,List<String>> changes = (Map<String,List<String>>) arg;
+            notifyObservers(changes);
+        }
     }
 
-    @Override
-    public void update() {
-
-    }
 
     @Override
     public void addObserver(Observer observer) {
@@ -30,14 +30,13 @@ public class Notifier implements Observer, Observable {
     }
 
     @Override
-    public void notifyObservers() {
-        observers.forEach((observer -> observer.update()));
+    public void notifyObservers(Object arg) {
+        if (arg instanceof Map) {
+            Map<String,List<String>> notification = (Map<String,List<String>>) arg;
+            MessageGenerator messageGenerator = new MessageGenerator(notification);
+            observers.forEach((observer -> messageGenerator.generateMessage()));
+            System.out.println(messageGenerator.generateMessage());
+        }
     }
 
-    @Override
-    public void notifyObservers(List<String> list) {
-        MessageGenerator messageGenerator = new MessageGenerator(list);
-        observers.forEach((observer -> messageGenerator.generateMessage()));
-        System.out.println("se notifico a la UI");
-    }
 }

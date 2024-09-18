@@ -3,8 +3,6 @@ package org.domingus.polling;
 import org.domingus.interfaces.Observable;
 import org.domingus.interfaces.Observer;
 
-import java.util.List;
-
 public class Timer implements Observable {
     private Integer timeInterval;
 
@@ -12,10 +10,10 @@ public class Timer implements Observable {
         this.timeInterval = timeInterval;
     }
 
-    public void start() throws InterruptedException { //TODO revisar si debe ser privado
+    public void start() throws InterruptedException {
         while (true) {
             Thread.sleep(this.timeInterval);
-            notifyObservers();
+            notifyObservers(null);
         }
     }
 
@@ -30,12 +28,8 @@ public class Timer implements Observable {
     }
 
     @Override
-    public void notifyObservers() {
-        observers.forEach((observer -> observer.update()));
+    public void notifyObservers(Object arg) {
+        observers.forEach((observer -> observer.update(null)));
     }
 
-    @Override
-    public void notifyObservers(List<String> list) {
-
-    }
 }

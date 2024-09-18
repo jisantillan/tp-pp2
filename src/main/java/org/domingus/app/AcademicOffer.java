@@ -6,8 +6,8 @@ public class AcademicOffer extends Data {
 
     public AcademicOffer() {
     }
-    public AcademicOffer(String name, String url, String date) {
-        super(name, url, date);
+    public AcademicOffer(String name,  String date) {
+        super(name, date);
     }
 
 }
