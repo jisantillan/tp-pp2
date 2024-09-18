@@ -9,13 +9,23 @@ import org.domingus.polling.*;
 import java.io.*;
 import java.net.URL;
 
+import static java.util.Objects.isNull;
+
 public class DomingusApp {
 
     private static final String CONFIG_FILE_PROPERTY = "configFile";
 
     public static void main(String[] args) throws InterruptedException, IOException {
-      //  ObjectMapper mapper = new ObjectMapper();
-      //  DomingusConfiguration config = mapper.readValue(System.getProperty(CONFIG_FILE_PROPERTY), DomingusConfiguration.class);
+//        DomingusConfiguration config = null;
+//        if(!(args.length == 0)) {
+//            config = getConfigFromArgs(args[0]);
+//        } else {
+//            config = getDefaultConfig();
+//        }
+//
+//        if(isNull(config)) {
+//            throw new RuntimeException("There is not a configuration for the app");
+//        }
 
         Notifier notifier = new Notifier();
 
@@ -31,12 +41,12 @@ public class DomingusApp {
         timer.start();
     }
 
-    private static DomingusConfiguration opcionDos() throws JsonProcessingException {
+    private static DomingusConfiguration getDefaultConfig() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(System.getProperty(CONFIG_FILE_PROPERTY), DomingusConfiguration.class);
     }
 
-    private static DomingusConfiguration opcionUno(String arg) throws IOException {
+    private static DomingusConfiguration getConfigFromArgs(String arg) throws IOException {
         File file = new File(arg);
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(file, DomingusConfiguration.class);

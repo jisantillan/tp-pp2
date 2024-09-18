@@ -1,34 +1,27 @@
 package org.domingus.config;
 
-import org.domingus.app.AcademicOffer;
 import org.domingus.polling.Data;
+
+import java.util.List;
 
 public class DomingusConfiguration {
 
-    private AcademicOffer defaultData;
+    private List<Data> defaultData;
     private Integer timerInterval;
 
     public DomingusConfiguration() {
     }
 
-    public DomingusConfiguration(AcademicOffer defaultData, Integer timerInterval) {
+    public DomingusConfiguration(List<Data> defaultData, Integer timerInterval) {
         this.defaultData = defaultData;
         this.timerInterval = timerInterval;
     }
 
-    public Data getDefaultData() {
+    public List<Data> getDefaultData() {
         return defaultData;
     }
 
     public Integer getTimerInterval() {
         return timerInterval;
-    }
-
-    public void setDefaultData(AcademicOffer defaultData) {
-        this.defaultData = defaultData;
-    }
-
-    public void setTimerInterval(Integer timerInterval) {
-        this.timerInterval = timerInterval;
     }
 }

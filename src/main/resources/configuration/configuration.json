@@ -1,8 +1,15 @@
 {
-  "defaultData": {
-    "name": "AcademicOffer",
-    "url": "www.blabla.com",
-    "date": "fecha"
-  },
-  "timerInterval": 2000
+  "defaultData": [
+    {
+      "name": "AcademicOffer",
+      "url": "www.blabla.com",
+      "date": "fecha"
+    },
+    {
+      "name": "Inform",
+      "url": "www.blabla.com",
+      "date": "fecha"
+    }
+  ],
+  "timerInterval": 10000
 }
