@@ -22,6 +22,7 @@ public class ChangeDetector implements ChangeInform, Observable {
         return data.hasChanges(data2) && data.sameName(data2);
     }
 
+    // Este metodo es redundante, se puede llamar directamente a data.detectChanges(data2);
     private Map<String,List<String>> detectChanges(Data data, Data data2) {
         return data.detectChanges(data2);
     }

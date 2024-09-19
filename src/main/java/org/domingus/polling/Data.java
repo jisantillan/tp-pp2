@@ -33,7 +33,7 @@ public abstract class Data implements Comparable {
             }
 
             if (!this.date.equals(otherData.date)) {
-                changes.add(date);
+                changes.add(otherData.date);
             }
 
             result.put(this.name, changes);
@@ -56,6 +56,7 @@ public abstract class Data implements Comparable {
         return false;
         }
 
+    // este metodo es redundante
     protected boolean sameName(Data otherData) {
         if (!this.name.equals(otherData.name)) {
             return false;
