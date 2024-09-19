@@ -31,7 +31,9 @@ public class Domingus {
     public static final String INITIALIZING_FAIL_MESSAGE = "There is not a configuration for the app";
     public static final String DEFAULT_CONFIGURATION_PATH_FILE = "src\\main\\resources\\configuration\\configuration.json";
 
-    private Set<NotificationPlatform> platforms;
+    public static final String FOLDER_EXTENSIONS = "src\\main\\resources\\extensions\\";
+
+    private Set<Notificable> platforms;
     private PlatformDiscoverer discoverer;
     
     private Notifier notifier;
@@ -41,9 +43,12 @@ public class Domingus {
     }
 
 
-    public void init(String[] args, String path) throws InterruptedException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public void init(String[] args) throws InterruptedException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         discoverer = new PlatformDiscoverer();
-        //this.platforms = discoverer.discover(path);
+        this.platforms = discoverer.discover(FOLDER_EXTENSIONS);
+        for (Notificable notificable : platforms) {
+        	notifier.addObserver(notificable);
+		}
 
         DomingusConfiguration config = !(args.length == 0) ? getConfigFromArgs(args[0]) : getDefaultConfig();
 

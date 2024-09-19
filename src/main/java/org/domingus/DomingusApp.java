@@ -14,7 +14,7 @@ public class DomingusApp implements Notificable{
 		Domingus domingus = new Domingus();
 		domingus.addObserver(new DomingusApp());
 		try {
-			domingus.init(args, null);
+			domingus.init(args);
 		} catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException
 				| IllegalAccessException | InterruptedException | IOException e) {
 			e.printStackTrace();
