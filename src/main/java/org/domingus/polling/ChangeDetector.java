@@ -18,7 +18,7 @@ public class ChangeDetector implements ChangeInform, Observable {
         }
     }
 
-    private boolean hasDifferences(Data data , Data data2){
+    private boolean hasDifferences(Data data , Data data2) {
         return data.hasChanges(data2) && data.sameName(data2);
     }
 
