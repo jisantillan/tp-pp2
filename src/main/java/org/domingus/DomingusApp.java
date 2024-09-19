@@ -32,7 +32,7 @@ public class DomingusApp {
         ChangeDetector changeDetector = new ChangeDetector();
         changeDetector.addObserver(notifier);
 
-        VersionHistory versionsManager = new VersionHistory(changeDetector, new AcademicOffer("AcademicOffer" , ""));
+        VersionHistory versionsManager = new VersionHistory(changeDetector, new AcademicOffer("Aulas_UNGS" , ""));
 
         DataFetcher dataFetcher = new DataFetcher(versionsManager, new URL("http://www.ungs.com/aulas.pdf"));
 
