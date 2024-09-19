@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Data implements Comparable {
-    private String name;
-    private String date;
+    protected String name;
+    protected String date;
 
     public Data() {
     }

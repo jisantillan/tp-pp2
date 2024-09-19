@@ -6,7 +6,7 @@ import static java.util.Objects.isNull;
 
 public enum DataFetcherTypes {
 
-    ACADEMIC_OFFER("AcademicOffer", AcademicOffer.class.getName());
+    ACADEMIC_OFFER("Aulas_UNGS", AcademicOffer.class.getName());
 
     public static final String DATA_NOT_FOUND_MESSAGE = "There are not data fetchers configured for give name %s";
     private String name;

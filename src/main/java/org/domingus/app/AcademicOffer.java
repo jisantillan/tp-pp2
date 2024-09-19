@@ -6,7 +6,6 @@ public class AcademicOffer extends Data {
 
     public AcademicOffer() {
     }
-
     public AcademicOffer(String name,  String date) {
         super(name, date);
     }

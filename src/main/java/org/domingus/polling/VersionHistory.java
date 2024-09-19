@@ -8,7 +8,7 @@ public class VersionHistory implements VersionUpdater {
     private Data currentVersion;
     private Data previousVersion;
     private ChangeInform changeInform;
-
+    
     public VersionHistory(ChangeInform changeInform, Data currentVersion){
         this.currentVersion = currentVersion;
         this.changeInform = changeInform;

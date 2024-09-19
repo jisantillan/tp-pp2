@@ -1,5 +1,7 @@
 package org.domingus.config;
 
+import org.domingus.polling.Data;
+
 import java.util.List;
 
 public class DomingusConfiguration {
