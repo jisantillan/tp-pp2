@@ -2,6 +2,7 @@ package org.domingus.polling;
 
 import org.domingus.interfaces.Observer;
 import org.domingus.interfaces.VersionUpdater;
+import org.domingus.mock.DataMock;
 import org.domingus.mock.Mock;
 
 import java.net.URL;
@@ -20,8 +21,7 @@ public class DataFetcher implements Observer {
 
     private Data fetchData()  {
         //TODO resolve data url
-        Data data = mock.getData(url.toString());
-        return data;
+        return mock.getData(url.toString());
     }
 
     @Override

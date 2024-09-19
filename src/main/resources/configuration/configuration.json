@@ -1,15 +1,10 @@
 {
-  "defaultData": [
+  "dataConfiguration": [
     {
-      "name": "AcademicOffer",
-      "url": "www.blabla.com",
-      "date": "fecha"
-    },
-    {
-      "name": "Inform",
-      "url": "www.blabla.com",
+      "name": "Aulas_UNGS",
+      "url": "http://www.ungs.com/aulas.pdf",
       "date": "fecha"
     }
   ],
-  "timerInterval": 10000
+  "timerInterval": 2000
 }

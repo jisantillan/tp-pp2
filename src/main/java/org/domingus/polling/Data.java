@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Data implements Comparable {
-    private String name;
-    private String date;
+    protected String name;
+    protected String date;
 
     public Data() {
     }
@@ -63,4 +63,19 @@ public abstract class Data implements Comparable {
         return true;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

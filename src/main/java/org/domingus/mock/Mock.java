@@ -17,10 +17,10 @@ public class Mock {
     }
 
     public DataMock getData(String URL)  {
-
-        mocks.get(URL).updateVersion();
+        DataMock newDataMock = new DataMock(mocks.get(URL).getName(), mocks.get(URL).getDate());
+        newDataMock.updateVersion();
 
         // Devuelve el dato solicitado (eventualmente con una version nueva)
-        return mocks.get(URL);
+        return newDataMock;
     }
 }
