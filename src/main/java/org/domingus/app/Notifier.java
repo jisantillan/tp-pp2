@@ -17,7 +17,6 @@ public class Notifier implements Observer {
     @Override
     public void update(Object arg) {
         if (arg instanceof Map) {
-            @SuppressWarnings("unchecked")
 			Map<String,List<String>> changes = (Map<String,List<String>>) arg;
             notifyObservers(changes);
         }
@@ -33,20 +32,15 @@ public class Notifier implements Observer {
     }
 
     public void notifyObservers(Object arg) {
-        @SuppressWarnings("unchecked")
-		Map<String,List<String>> notification = (Map<String,List<String>>) arg;
-        MessageGenerator messageGenerator = new MessageGenerator(notification);
-        String message = messageGenerator.generateMessage();
-
-    	for (Notificable notificable : observers) {
-			notificable.sendMessage(message);
-		}/*
         if (arg instanceof Map) {
-            Map<String,List<String>> notification = (Map<String,List<String>>) arg;
+            Map<String, List<String>> notification = (Map<String, List<String>>) arg;
             MessageGenerator messageGenerator = new MessageGenerator(notification);
-            observers.forEach((observer -> messageGenerator.generateMessage()));
-            System.out.println(messageGenerator.generateMessage());
-        }*/
+            String message = messageGenerator.generateMessage();
+
+            for (Notificable notificable : observers) {
+                notificable.sendMessage(message);
+            }
+        }
     }
 
 }

@@ -2,7 +2,7 @@ package org.domingus.mock;
 
 import org.domingus.interfaces.Notificable;
 
-public class ExtensionTelegram implements Notificable {
+public class ExtensionTelegram implements Notificable { //TODO agregar esta clase al repositorio de extension
 
 	@Override
 	public void sendMessage(String message) {

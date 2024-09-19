@@ -44,7 +44,7 @@ public class Domingus {
         discoverer = new PlatformDiscoverer();
         this.platforms = discoverer.discover(FOLDER_EXTENSIONS);
         for (Notificable notificable : platforms) {
-        	//notifier.addObserver(notificable);
+        	notifier.addObserver(notificable);
 		}
 
         DomingusConfiguration config = !(args.length == 0) ? getConfigFromArgs(args[0]) : getDefaultConfig();
