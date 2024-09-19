@@ -1,41 +1,45 @@
 package org.domingus.app;
 
-import org.domingus.interfaces.Observable;
-import org.domingus.interfaces.Observer;
-
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class Notifier implements Observer, Observable {
+import org.domingus.interfaces.Notificable;
+import org.domingus.interfaces.Observer;
 
+public class Notifier implements Observer {
+
+	Set<Notificable> observers = new HashSet<>();
+	
     public Notifier(){}
 
     @Override
     public void update(Object arg) {
         if (arg instanceof Map) {
-            Map<String,List<String>> changes = (Map<String,List<String>>) arg;
+			Map<String,List<String>> changes = (Map<String,List<String>>) arg;
             notifyObservers(changes);
         }
     }
 
 
-    @Override
-    public void addObserver(Observer observer) {
+    public void addObserver(Notificable observer) {
         observers.add(observer);
     }
 
-    @Override
-    public void removeObserver(Observer observer) {
+    public void removeObserver(Notificable observer) {
         observers.remove(observer);
     }
 
-    @Override
     public void notifyObservers(Object arg) {
         if (arg instanceof Map) {
-            Map<String,List<String>> notification = (Map<String,List<String>>) arg;
+            Map<String, List<String>> notification = (Map<String, List<String>>) arg;
             MessageGenerator messageGenerator = new MessageGenerator(notification);
-            observers.forEach((observer -> messageGenerator.generateMessage()));
-            System.out.println(messageGenerator.generateMessage());
+            String message = messageGenerator.generateMessage();
+
+            for (Notificable notificable : observers) {
+                notificable.sendMessage(message);
+            }
         }
     }
 

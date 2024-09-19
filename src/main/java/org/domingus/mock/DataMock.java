@@ -7,19 +7,16 @@ import java.util.Random;
 
 public class DataMock extends Data {
 
-    private int version;
+    private static int CHANGE_PROBABILITY = 30;
     private Random random;
 
     public DataMock(String name, String date) {
         super(name, date);
-        this.version = 1;
         this.random = new Random();
     }
 
     public void updateVersion() {
-        // Hay un 30% de probabilidad de que la version del archivo haya cambiado
-        if (random.nextInt(100) < 30) {
-            version++;
+        if (random.nextInt(100) < CHANGE_PROBABILITY) {
             date = new Date().toString();
         }
     }

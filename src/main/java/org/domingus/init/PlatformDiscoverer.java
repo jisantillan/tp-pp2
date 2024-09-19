@@ -1,7 +1,5 @@
 package org.domingus.init;
 
-import org.domingus.interfaces.NotificationPlatform;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,10 +12,13 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.domingus.interfaces.Notificable;
+
 public class PlatformDiscoverer {
 
     private final String JAR_EXTENSION = ".jar";
-    public Set<NotificationPlatform> discover(String path) throws FileNotFoundException {
+    
+    public Set<Notificable> discover(String path) throws FileNotFoundException {
         File directory = new File(path);
 
         if (!directory.exists()) {
@@ -27,13 +28,13 @@ public class PlatformDiscoverer {
         return findClasses(path);
     }
 
-    private Set<NotificationPlatform> findClasses(String path) {
-        Set<NotificationPlatform> platforms = new HashSet<>();
+    private Set<Notificable> findClasses(String path) {
+        Set<Notificable> platforms = new HashSet<>();
         findClassesInPath(new File(path), platforms);
         return platforms;
     }
 
-    private void findClassesInPath(File path, Set<NotificationPlatform> platforms) {
+    private void findClassesInPath(File path, Set<Notificable> platforms) {
         if (!path.exists()) {
             return;
         }
@@ -46,12 +47,12 @@ public class PlatformDiscoverer {
                 }
             }
         } else if (path.isFile() && path.getName().endsWith(JAR_EXTENSION)) {
-            platforms.addAll(findPlatformsInJar(path));
+        	platforms.addAll(findPlatformsInJar(path));
         }
     }
 
-    private Set<NotificationPlatform> findPlatformsInJar(File jarFile) {
-        Set<NotificationPlatform> platforms = new HashSet<>();
+    private Set<Notificable> findPlatformsInJar(File jarFile) {
+        Set<Notificable> platforms = new HashSet<>();
 
         try (JarFile jar = new JarFile(jarFile)) {
             Enumeration<JarEntry> entries = jar.entries();
@@ -59,7 +60,7 @@ public class PlatformDiscoverer {
             while (entries.hasMoreElements()) {
                 JarEntry entry = entries.nextElement();
                 if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
-                    instantiateClassFromJar(jarFile, entry, platforms);
+                    platforms.add(instantiateClassFromJar(jarFile, entry));
                 }
             }
         } catch (IOException e) {
@@ -69,16 +70,18 @@ public class PlatformDiscoverer {
         return platforms;
     }
 
-    private void instantiateClassFromJar(File jarFile, JarEntry entry, Set<NotificationPlatform> platforms) {
+    private Notificable instantiateClassFromJar(File jarFile, JarEntry entry) {
+    	Notificable ret = null;
         try {
             Class<?> cls = loadClassFromJar(jarFile, entry.getName());
-            if (cls != null && NotificationPlatform.class.isAssignableFrom(cls)) {
-                platforms.add((NotificationPlatform) cls.getDeclaredConstructor().newInstance());
+            if (cls != null && Notificable.class.isAssignableFrom(cls)) {
+                ret = (Notificable) cls.getDeclaredConstructor().newInstance();
             }
         } catch (InstantiationException | NoSuchMethodException | InvocationTargetException |
                  IllegalAccessException e) {
             System.out.println("Error instantiating class: " + e.getMessage());
         }
+        return ret;
     }
 
     private Class<?> loadClassFromJar(File jarFile, String className) {

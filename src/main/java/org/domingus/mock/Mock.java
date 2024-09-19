@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class Mock {
     private Map<String, DataMock> mocks;
+    private DataMock lastDeliveryData;
 
     public Mock() {
         mocks = new HashMap<>();
@@ -17,8 +18,12 @@ public class Mock {
     }
 
     public DataMock getData(String URL)  {
-        DataMock newDataMock = new DataMock(mocks.get(URL).getName(), mocks.get(URL).getDate());
+    	if (lastDeliveryData == null) {
+    		lastDeliveryData = mocks.get(URL);
+    	}
+        DataMock newDataMock = new DataMock(lastDeliveryData.getName(), lastDeliveryData.getDate());
         newDataMock.updateVersion();
+        lastDeliveryData = newDataMock;
 
         // Devuelve el dato solicitado (eventualmente con una version nueva)
         return newDataMock;
