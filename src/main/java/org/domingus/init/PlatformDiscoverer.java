@@ -1,8 +1,5 @@
 package org.domingus.init;
 
-import org.domingus.interfaces.Notificable;
-import org.domingus.interfaces.NotificationPlatform;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,13 +12,14 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.domingus.interfaces.Notificable;
+
 public class PlatformDiscoverer {
 
     private final String JAR_EXTENSION = ".jar";
     
     public Set<Notificable> discover(String path) throws FileNotFoundException {
-        System.out.println("Iniciando discover");
-    	File directory = new File(path);
+        File directory = new File(path);
 
         if (!directory.exists()) {
             throw new FileNotFoundException("Location does not exist: " + path);
@@ -42,7 +40,6 @@ public class PlatformDiscoverer {
         }
 
         if (path.isDirectory()) {
-        	System.out.println("Es una carpeta");
             File[] files = path.listFiles();
             if (files != null) {
                 for (File file : files) {
@@ -50,7 +47,6 @@ public class PlatformDiscoverer {
                 }
             }
         } else if (path.isFile() && path.getName().endsWith(JAR_EXTENSION)) {
-        	System.out.println("Es un archivo");
         	platforms.addAll(findPlatformsInJar(path));
         }
     }
@@ -78,7 +74,6 @@ public class PlatformDiscoverer {
     	Notificable ret = null;
         try {
             Class<?> cls = loadClassFromJar(jarFile, entry.getName());
-            System.out.println(cls.getName());
             if (cls != null && Notificable.class.isAssignableFrom(cls)) {
                 ret = (Notificable) cls.getDeclaredConstructor().newInstance();
             }

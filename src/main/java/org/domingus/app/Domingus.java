@@ -1,12 +1,20 @@
 package org.domingus.app;
 
+import static java.util.Objects.isNull;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.domingus.config.DataFetcherConfiguration;
 import org.domingus.config.DataFetcherTypes;
 import org.domingus.config.DomingusConfiguration;
 import org.domingus.init.PlatformDiscoverer;
 import org.domingus.interfaces.Notificable;
-import org.domingus.interfaces.NotificationPlatform;
-import org.domingus.interfaces.Observer;
 import org.domingus.polling.ChangeDetector;
 import org.domingus.polling.Data;
 import org.domingus.polling.DataFetcher;
@@ -14,17 +22,6 @@ import org.domingus.polling.Timer;
 import org.domingus.polling.VersionHistory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import static java.util.Objects.isNull;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Domingus {
 	
@@ -47,7 +44,7 @@ public class Domingus {
         discoverer = new PlatformDiscoverer();
         this.platforms = discoverer.discover(FOLDER_EXTENSIONS);
         for (Notificable notificable : platforms) {
-        	notifier.addObserver(notificable);
+        	//notifier.addObserver(notificable);
 		}
 
         DomingusConfiguration config = !(args.length == 0) ? getConfigFromArgs(args[0]) : getDefaultConfig();
@@ -62,7 +59,12 @@ public class Domingus {
         Set<DataFetcher> dataFetchers = getDataFetchers(config, changeDetector);
 
         Timer timer = new Timer(config.getTimerInterval());
-        dataFetchers.forEach(timer::addObserver);
+        
+        for (DataFetcher dataFetcher : dataFetchers) {
+			timer.addObserver(dataFetcher);
+		}
+        
+        //dataFetchers.forEach(timer::addObserver);
         timer.start();
     }
 
@@ -75,7 +77,8 @@ public class Domingus {
             data.setDate(defaultData.getDate());
             data.setName(defaultData.getName());
             VersionHistory versionsHistory = new VersionHistory(changeDetector,data);
-            DataFetcher dataFetcher = new DataFetcher(versionsHistory, new URL(defaultData.getUrl()));
+            @SuppressWarnings("deprecation")
+			DataFetcher dataFetcher = new DataFetcher(versionsHistory, new URL(defaultData.getUrl()));
             dataFetchers.add(dataFetcher);
         }
         return dataFetchers;

@@ -1,12 +1,18 @@
 package org.domingus.polling;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.domingus.interfaces.Observable;
 import org.domingus.interfaces.Observer;
 
 public class Timer implements Observable {
     private Integer timeInterval;
+    private Set<Observer> observers;
+
 
     public Timer(Integer timeInterval){
+    	observers = new HashSet<>();
         this.timeInterval = timeInterval;
     }
 

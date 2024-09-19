@@ -4,11 +4,20 @@ import org.domingus.interfaces.ChangeInform;
 import org.domingus.interfaces.Observable;
 import org.domingus.interfaces.Observer;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public class ChangeDetector implements ChangeInform, Observable {
+	
+    private Set<Observer> observers;
+    
+    public ChangeDetector() {
+    	observers = new HashSet<>();
+	}
+
 
     @Override
     public void inform(Data data, Data data2) {
@@ -41,7 +50,8 @@ public class ChangeDetector implements ChangeInform, Observable {
     @Override
     public void notifyObservers(Object arg) {
         if (arg instanceof Map) {
-            Map<String,List<String>> changes = (Map<String,List<String>>) arg;
+            @SuppressWarnings("unchecked")
+			Map<String,List<String>> changes = (Map<String,List<String>>) arg;
             observers.forEach((observer -> observer.update(changes)));
         }
 
