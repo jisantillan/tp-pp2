@@ -16,83 +16,81 @@ import org.domingus.interfaces.Notificable;
 
 public class PlatformDiscoverer {
 
-    private final String JAR_EXTENSION = ".jar";
-    
-    public Set<Notificable> discover(String path) throws FileNotFoundException {
-        File directory = new File(path);
+    private static final String JAR_EXTENSION = ".jar";
+
+    public Set<Notificable> discover(String directoryPath) throws FileNotFoundException {
+        File directory = new File(directoryPath);
 
         if (!directory.exists()) {
-            throw new FileNotFoundException("Location does not exist: " + path);
+            throw new FileNotFoundException("Location does not exist: " + directoryPath);
         }
 
-        return findClasses(path);
+        return exploreDirectory(directoryPath);
     }
 
-    private Set<Notificable> findClasses(String path) {
+    private Set<Notificable> exploreDirectory(String directoryPath) {
         Set<Notificable> platforms = new HashSet<>();
-        findClassesInPath(new File(path), platforms);
+        scanFilesInPath(new File(directoryPath), platforms);
         return platforms;
     }
 
-    private void findClassesInPath(File path, Set<Notificable> platforms) {
-        if (!path.exists()) {
+    private void scanFilesInPath(File currentPath, Set<Notificable> platforms) {
+        if (!currentPath.exists()) {
             return;
         }
 
-        if (path.isDirectory()) {
-            File[] files = path.listFiles();
+        if (currentPath.isDirectory()) {
+            File[] files = currentPath.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    findClassesInPath(file, platforms);
+                    scanFilesInPath(file, platforms);
                 }
             }
-        } else if (path.isFile() && path.getName().endsWith(JAR_EXTENSION)) {
-        	platforms.addAll(findPlatformsInJar(path));
+        } else if (currentPath.isFile() && currentPath.getName().endsWith(JAR_EXTENSION)) {
+            platforms.addAll(discoverPlatformsInJar(currentPath));
         }
     }
 
-    private Set<Notificable> findPlatformsInJar(File jarFile) {
+    private Set<Notificable> discoverPlatformsInJar(File jarFile) {
         Set<Notificable> platforms = new HashSet<>();
 
         try (JarFile jar = new JarFile(jarFile)) {
-            Enumeration<JarEntry> entries = jar.entries();
+            Enumeration<JarEntry> jarEntries = jar.entries();
 
-            while (entries.hasMoreElements()) {
-                JarEntry entry = entries.nextElement();
+            while (jarEntries.hasMoreElements()) {
+                JarEntry entry = jarEntries.nextElement();
                 if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
-                    platforms.add(instantiateClassFromJar(jarFile, entry));
+                    platforms.add(createInstanceFromClass(jarFile, entry));
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error reading jar file: " + e.getMessage());
+            System.err.println("Error reading jar file: " + e.getMessage());
         }
 
         return platforms;
     }
 
-    private Notificable instantiateClassFromJar(File jarFile, JarEntry entry) {
-    	Notificable ret = null;
+    private Notificable createInstanceFromClass(File jarFile, JarEntry entry) {
+        Notificable instance = null;
         try {
-            Class<?> cls = loadClassFromJar(jarFile, entry.getName());
-            if (cls != null && Notificable.class.isAssignableFrom(cls)) {
-                ret = (Notificable) cls.getDeclaredConstructor().newInstance();
+            Class<?> clazz = loadClassFromJar(jarFile, entry.getName());
+            if (clazz != null && Notificable.class.isAssignableFrom(clazz)) {
+                instance = (Notificable) clazz.getDeclaredConstructor().newInstance();
             }
-        } catch (InstantiationException | NoSuchMethodException | InvocationTargetException |
-                 IllegalAccessException e) {
-            System.out.println("Error instantiating class: " + e.getMessage());
+        } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            System.err.println("Error instantiating class: " + e.getMessage());
         }
-        return ret;
+        return instance;
     }
 
     private Class<?> loadClassFromJar(File jarFile, String className) {
         try {
             URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{jarFile.toURI().toURL()});
-            String canonicalClassName = className.replace("/", ".").replace(".class", "");
-            return Class.forName(canonicalClassName, true, classLoader);
+            String formattedClassName = className.replace("/", ".").replace(".class", "");
+            return Class.forName(formattedClassName, true, classLoader);
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading class from jar: " + e.getMessage());
+            System.err.println("Error loading class from jar: " + e.getMessage());
             return null;
         }
     }
-
 }

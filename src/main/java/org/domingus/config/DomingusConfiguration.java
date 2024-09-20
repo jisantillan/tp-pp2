@@ -1,20 +1,20 @@
 package org.domingus.config;
 
-import org.domingus.polling.Data;
-
 import java.util.List;
 
 public class DomingusConfiguration {
 
     private List<DataFetcherConfiguration> dataConfiguration;
     private Integer timerInterval;
+    private String extensionsPath;
 
     public DomingusConfiguration() {
     }
 
-    public DomingusConfiguration(List<DataFetcherConfiguration> defaultData, Integer timerInterval) {
+    public DomingusConfiguration(List<DataFetcherConfiguration> defaultData, Integer timerInterval, String extensionsPath) {
         this.dataConfiguration = defaultData;
         this.timerInterval = timerInterval;
+        this.extensionsPath = extensionsPath;
     }
 
     public List<DataFetcherConfiguration> getDataConfiguration() {
@@ -23,5 +23,9 @@ public class DomingusConfiguration {
 
     public Integer getTimerInterval() {
         return timerInterval;
+    }
+
+    public String getExtensionsPath() {
+        return extensionsPath;
     }
 }

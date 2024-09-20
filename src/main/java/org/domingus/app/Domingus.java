@@ -28,8 +28,6 @@ public class Domingus {
     public static final String INITIALIZING_FAIL_MESSAGE = "There is not a configuration for the app";
     public static final String DEFAULT_CONFIGURATION_PATH_FILE = "src\\main\\resources\\configuration\\configuration.json";
 
-    public static final String FOLDER_EXTENSIONS = "src\\main\\resources\\extensions\\";
-
     private Set<Notificable> platforms;
     private PlatformDiscoverer discoverer;
     
@@ -42,16 +40,15 @@ public class Domingus {
 
     public void init(String[] args) throws InterruptedException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         discoverer = new PlatformDiscoverer();
-        this.platforms = discoverer.discover(FOLDER_EXTENSIONS);
-        for (Notificable notificable : platforms) {
-        	notifier.addObserver(notificable);
-		}
-
         DomingusConfiguration config = !(args.length == 0) ? getConfigFromArgs(args[0]) : getDefaultConfig();
 
         if(isNull(config)) {
             throw new RuntimeException(Domingus.INITIALIZING_FAIL_MESSAGE);
         }
+
+        this.platforms = discoverer.discover(config.getExtensionsPath());
+
+        platforms.forEach(notifier::addObserver);
 
         ChangeDetector changeDetector = new ChangeDetector();
         changeDetector.addObserver(notifier);
@@ -60,11 +57,7 @@ public class Domingus {
 
         Timer timer = new Timer(config.getTimerInterval());
         
-        for (DataFetcher dataFetcher : dataFetchers) {
-			timer.addObserver(dataFetcher);
-		}
-        
-        //dataFetchers.forEach(timer::addObserver);
+        dataFetchers.forEach(timer::addObserver);
         timer.start();
     }
 
@@ -77,7 +70,6 @@ public class Domingus {
             data.setDate(defaultData.getDate());
             data.setName(defaultData.getName());
             VersionHistory versionsHistory = new VersionHistory(changeDetector,data);
-            @SuppressWarnings("deprecation")
 			DataFetcher dataFetcher = new DataFetcher(versionsHistory, new URL(defaultData.getUrl()));
             dataFetchers.add(dataFetcher);
         }

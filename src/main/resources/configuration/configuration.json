@@ -6,5 +6,6 @@
       "date": "fecha"
     }
   ],
-  "timerInterval": 2000
+  "timerInterval": 2000,
+  "extensionsPath": "src\\main\\resources\\extensions\\"
 }
