@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static java.util.Objects.nonNull;
+
 
 public class ChangeDetector implements ChangeInform, Observable {
 	
@@ -47,11 +49,11 @@ public class ChangeDetector implements ChangeInform, Observable {
         observers.remove(observer);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void notifyObservers(Object arg) {
         if (arg instanceof Map) {
-            @SuppressWarnings("unchecked")
-			Map<String,List<String>> changes = (Map<String,List<String>>) arg;
+            Map<String,List<String>> changes = (Map<String,List<String>>) arg;
             observers.forEach((observer -> observer.update(changes)));
         }
 

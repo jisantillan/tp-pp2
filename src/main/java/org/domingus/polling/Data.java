@@ -20,8 +20,8 @@ public abstract class Data implements Comparable {
     }
 
     @Override
-    public Map<String,List<String>> detectChanges(Comparable other) {
-        Map<String,List<String>> result = new HashMap<>();
+    public Map<String, List<String>> detectChanges(Comparable other) {
+        Map<String, List<String>> result = new HashMap<>();
 
         if (other instanceof Data) {
             Data otherData = (Data) other;
@@ -45,23 +45,17 @@ public abstract class Data implements Comparable {
 
     @Override
     public boolean hasChanges(Comparable other) {
+        boolean result = false;
         if (other instanceof Data) {
             Data otherData = (Data) other;
-
-            if (!this.date.equals(otherData.date)) {
-                return true;
-            }
+            result = !this.date.equals(otherData.date);
         }
-
-        return false;
-        }
+        return result;
+    }
 
     // este metodo es redundante
     protected boolean sameName(Data otherData) {
-        if (!this.name.equals(otherData.name)) {
-            return false;
-        }
-        return true;
+        return this.name.equals(otherData.name);
     }
 
     public String getName() {
