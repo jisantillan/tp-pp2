@@ -15,18 +15,8 @@
         <!--        <core.version>1.0-SNAPSHOT</core.version>-->
         <jackson-databind.version>2.13.0</jackson-databind.version>
     </properties>
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
+
     <dependencies>
-        <dependency>
-            <groupId>com.github.jisantillan</groupId>
-            <artifactId>tp-pp2-core</artifactId>
-            <version>develop-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
