@@ -1,0 +1,11 @@
+{
+  "dataConfiguration": [
+    {
+      "name": "Aulas_UNGS",
+      "url": "http://www.ungs.com/aulas.pdf",
+      "date": "fecha"
+    }
+  ],
+  "timerInterval": 2000,
+  "extensionsPath": "src\\main\\resources\\extensions\\"
+}
