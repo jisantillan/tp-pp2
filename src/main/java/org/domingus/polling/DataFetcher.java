@@ -12,15 +12,17 @@ public class DataFetcher implements Observer, Observable {
     private URL url;
     private Set<Observer> observers;
     private HttpService httpService;
+    private String dataType;
 
-    public DataFetcher( URL url){
+    public DataFetcher( URL url, String dataType){
         observers = new HashSet<>();
+        this.dataType = dataType;
         this.url = url;
         this.httpService = new HttpService();
     }
 
-    private Data fetchData()  {
-        return httpService.sendGet(url.toString());
+    private AcademicData fetchData()  {
+        return httpService.sendGet(url.toString(), dataType);
     }
 
     @Override

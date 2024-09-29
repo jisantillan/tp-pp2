@@ -5,11 +5,11 @@ import org.domingus.interfaces.Observer;
 
 public class VersionHistory implements Observer {
 
-    private Data currentVersion;
-    private Data previousVersion;
+    private AcademicData currentVersion;
+    private AcademicData previousVersion;
     private ChangeInform changeInform;
     
-    public VersionHistory(ChangeInform changeInform, Data currentVersion){
+    public VersionHistory(ChangeInform changeInform, AcademicData currentVersion){
         this.currentVersion = currentVersion;
         this.changeInform = changeInform;
     }
@@ -17,7 +17,7 @@ public class VersionHistory implements Observer {
     @Override
     public void update(Object arg) {
         previousVersion = currentVersion;
-        currentVersion = (Data) arg;
+        currentVersion = (AcademicData) arg;
         changeInform.inform( currentVersion, previousVersion);
     }
 }

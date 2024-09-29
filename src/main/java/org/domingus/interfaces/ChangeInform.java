@@ -1,7 +1,7 @@
 package org.domingus.interfaces;
 
-import org.domingus.polling.Data;
+import org.domingus.polling.AcademicData;
 
 public interface ChangeInform {
-    void inform(Data data, Data data2);
+    void inform(AcademicData academicData, AcademicData academicData2);
 }

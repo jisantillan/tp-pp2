@@ -1,8 +1,8 @@
 package org.domingus.app;
 
-import org.domingus.polling.Data;
+import org.domingus.polling.AcademicData;
 
-public class AcademicOffer extends Data {
+public class AcademicOffer extends AcademicData {
 
     public AcademicOffer() {
     }

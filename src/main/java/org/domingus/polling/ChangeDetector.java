@@ -15,8 +15,8 @@ public class ChangeDetector implements ChangeInform, Observable {
 	}
 
     @Override
-    public void inform(Data newData, Data previousData) {
-            Map<String, List<String>> changes = previousData.compare(newData);
+    public void inform(AcademicData newAcademicData, AcademicData previousAcademicData) {
+            Map<String, List<String>> changes = previousAcademicData.compare(newAcademicData);
             if (changes != null) {
                 notifyObservers(changes);
             }

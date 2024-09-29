@@ -7,21 +7,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Data implements Comparable {
+public abstract class AcademicData implements Comparable {
     protected String name;
     protected String date;
 
-    public Data() {
+    public AcademicData() {
     }
 
-    public Data(String name, String date) {
+    public AcademicData(String name, String date) {
         this.name = name;
         this.date = date;
     }
 
 
     @Override
-    public Map<String, List<String>> compare(Data other) {
+    public Map<String, List<String>> compare(AcademicData other) {
         Map<String, List<String>> result = null;
 
         List<String> changes = new ArrayList<>();
@@ -38,8 +38,8 @@ public abstract class Data implements Comparable {
     }
 
     // este metodo es redundante
-    protected boolean sameName(Data otherData) {
-        return this.name.equals(otherData.name);
+    protected boolean sameName(AcademicData otherAcademicData) {
+        return this.name.equals(otherAcademicData.name);
     }
 
     public String getName() {

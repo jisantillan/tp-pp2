@@ -1,23 +1,27 @@
 package org.domingus.polling;
 
-import org.domingus.app.AcademicOffer;
-
-import java.util.Map;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.domingus.config.DataFetcherTypes;
 
 public class DataFactory {
 
-    public static Data createDataFromMap(String url, Map<String, Object> dataMap) {
+    private final ObjectMapper objectMapper;
 
-        //TODO resolver hardcodeo de name y date
-        String name = (String) dataMap.get("name");
-        String date = (String) dataMap.get("date");
+    public DataFactory() {
+        this.objectMapper = new ObjectMapper();
+    }
 
-        switch (url) {
-            case "http://localhost:8081/accademic-offer":     //TODO resolver hardcodeo
-                return new AcademicOffer(name, date);
-            default:
-                throw new IllegalArgumentException("URL no reconocida: " + url);
-        }
+    public AcademicData createData(String dataType, String body) throws ClassNotFoundException, JsonProcessingException {
+
+        String className = DataFetcherTypes.getClassNameByName(dataType);
+
+        Class<?> dataClass = Class.forName(className);
+        AcademicData academicData = (AcademicData) objectMapper.readValue(body, dataClass );
+
+        return academicData;
     }
 
 }
+
+

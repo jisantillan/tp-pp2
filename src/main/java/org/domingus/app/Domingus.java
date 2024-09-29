@@ -16,7 +16,7 @@ import org.domingus.config.DomingusConfiguration;
 import org.domingus.init.PlatformDiscoverer;
 import org.domingus.interfaces.NotificationPlatform;
 import org.domingus.polling.ChangeDetector;
-import org.domingus.polling.Data;
+import org.domingus.polling.AcademicData;
 import org.domingus.polling.DataFetcher;
 import org.domingus.polling.Timer;
 import org.domingus.polling.VersionHistory;
@@ -66,11 +66,11 @@ public class Domingus {
         for (DataFetcherConfiguration defaultData : config.getDataConfiguration()) {
             String dataClassName = DataFetcherTypes.getClassNameByName(defaultData.getName());
             Class<?> clazz = Class.forName(dataClassName);
-            Data data = (Data) clazz.getDeclaredConstructor().newInstance();
-            data.setDate(defaultData.getDate());
-            data.setName(defaultData.getName());
-            VersionHistory versionsHistory = new VersionHistory(changeDetector,data);
-			DataFetcher dataFetcher = new DataFetcher( new URL(defaultData.getUrl()));
+            AcademicData academicData = (AcademicData) clazz.getDeclaredConstructor().newInstance();
+            academicData.setDate(defaultData.getDate());
+            academicData.setName(defaultData.getName());
+            VersionHistory versionsHistory = new VersionHistory(changeDetector,academicData);
+			DataFetcher dataFetcher = new DataFetcher( new URL(defaultData.getUrl()), academicData.getName());
             dataFetcher.addObserver(versionsHistory);
             dataFetchers.add(dataFetcher);
         }
