@@ -70,7 +70,8 @@ public class Domingus {
             data.setDate(defaultData.getDate());
             data.setName(defaultData.getName());
             VersionHistory versionsHistory = new VersionHistory(changeDetector,data);
-			DataFetcher dataFetcher = new DataFetcher(versionsHistory, new URL(defaultData.getUrl()));
+			DataFetcher dataFetcher = new DataFetcher( new URL(defaultData.getUrl()));
+            dataFetcher.addObserver(versionsHistory);
             dataFetchers.add(dataFetcher);
         }
         return dataFetchers;

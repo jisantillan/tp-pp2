@@ -1,9 +1,9 @@
 package org.domingus.polling;
 
 import org.domingus.interfaces.ChangeInform;
-import org.domingus.interfaces.VersionUpdater;
+import org.domingus.interfaces.Observer;
 
-public class VersionHistory implements VersionUpdater {
+public class VersionHistory implements Observer {
 
     private Data currentVersion;
     private Data previousVersion;
@@ -15,11 +15,9 @@ public class VersionHistory implements VersionUpdater {
     }
 
     @Override
-    public void updateVersion(Data data) {
+    public void update(Object arg) {
         previousVersion = currentVersion;
-        currentVersion = data;
+        currentVersion = (Data) arg;
         changeInform.inform( currentVersion, previousVersion);
     }
-
-
 }
