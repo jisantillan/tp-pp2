@@ -12,13 +12,13 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.domingus.interfaces.Notificable;
+import org.domingus.interfaces.NotificationPlatform;
 
 public class PlatformDiscoverer {
 
     private static final String JAR_EXTENSION = ".jar";
 
-    public Set<Notificable> discover(String directoryPath) throws FileNotFoundException {
+    public Set<NotificationPlatform> discover(String directoryPath) throws FileNotFoundException {
         File directory = new File(directoryPath);
 
         if (!directory.exists()) {
@@ -28,13 +28,13 @@ public class PlatformDiscoverer {
         return exploreDirectory(directoryPath);
     }
 
-    private Set<Notificable> exploreDirectory(String directoryPath) {
-        Set<Notificable> platforms = new HashSet<>();
+    private Set<NotificationPlatform> exploreDirectory(String directoryPath) {
+        Set<NotificationPlatform> platforms = new HashSet<>();
         scanFilesInPath(new File(directoryPath), platforms);
         return platforms;
     }
 
-    private void scanFilesInPath(File currentPath, Set<Notificable> platforms) {
+    private void scanFilesInPath(File currentPath, Set<NotificationPlatform> platforms) {
         if (!currentPath.exists()) {
             return;
         }
@@ -51,8 +51,8 @@ public class PlatformDiscoverer {
         }
     }
 
-    private Set<Notificable> discoverPlatformsInJar(File jarFile) {
-        Set<Notificable> platforms = new HashSet<>();
+    private Set<NotificationPlatform> discoverPlatformsInJar(File jarFile) {
+        Set<NotificationPlatform> platforms = new HashSet<>();
 
         try (JarFile jar = new JarFile(jarFile)) {
             Enumeration<JarEntry> jarEntries = jar.entries();
@@ -70,12 +70,12 @@ public class PlatformDiscoverer {
         return platforms;
     }
 
-    private Notificable createInstanceFromClass(File jarFile, JarEntry entry) {
-        Notificable instance = null;
+    private NotificationPlatform createInstanceFromClass(File jarFile, JarEntry entry) {
+        NotificationPlatform instance = null;
         try {
             Class<?> clazz = loadClassFromJar(jarFile, entry.getName());
-            if (clazz != null && Notificable.class.isAssignableFrom(clazz)) {
-                instance = (Notificable) clazz.getDeclaredConstructor().newInstance();
+            if (clazz != null && NotificationPlatform.class.isAssignableFrom(clazz)) {
+                instance = (NotificationPlatform) clazz.getDeclaredConstructor().newInstance();
             }
         } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             System.err.println("Error instantiating class: " + e.getMessage());

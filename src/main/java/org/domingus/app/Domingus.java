@@ -14,7 +14,7 @@ import org.domingus.config.DataFetcherConfiguration;
 import org.domingus.config.DataFetcherTypes;
 import org.domingus.config.DomingusConfiguration;
 import org.domingus.init.PlatformDiscoverer;
-import org.domingus.interfaces.Notificable;
+import org.domingus.interfaces.NotificationPlatform;
 import org.domingus.polling.ChangeDetector;
 import org.domingus.polling.Data;
 import org.domingus.polling.DataFetcher;
@@ -28,7 +28,7 @@ public class Domingus {
     public static final String INITIALIZING_FAIL_MESSAGE = "There is not a configuration for the app";
     public static final String DEFAULT_CONFIGURATION_PATH_FILE = "src\\main\\resources\\configuration\\configuration.json";
 
-    private Set<Notificable> platforms;
+    private Set<NotificationPlatform> platforms;
     private PlatformDiscoverer discoverer;
     
     private Notifier notifier;
@@ -87,7 +87,7 @@ public class Domingus {
         return mapper.readValue(file, DomingusConfiguration.class);
     }
 
-    public void addObserver(Notificable observer) {
+    public void addObserver(NotificationPlatform observer) {
     	notifier.addObserver(observer);
     }
     

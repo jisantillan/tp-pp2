@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.domingus.interfaces.Notificable;
+import org.domingus.interfaces.NotificationPlatform;
 import org.domingus.interfaces.Observer;
 
 public class Notifier implements Observer {
 
-	Set<Notificable> observers = new HashSet<>();
+	Set<NotificationPlatform> observers = new HashSet<>();
 	
     public Notifier(){}
 
@@ -23,11 +23,11 @@ public class Notifier implements Observer {
     }
 
 
-    public void addObserver(Notificable observer) {
+    public void addObserver(NotificationPlatform observer) {
         observers.add(observer);
     }
 
-    public void removeObserver(Notificable observer) {
+    public void removeObserver(NotificationPlatform observer) {
         observers.remove(observer);
     }
 
@@ -37,8 +37,8 @@ public class Notifier implements Observer {
             MessageGenerator messageGenerator = new MessageGenerator(notification);
             String message = messageGenerator.generateMessage();
 
-            for (Notificable notificable : observers) {
-                notificable.sendMessage(message);
+            for (NotificationPlatform notificationPlatform : observers) {
+                notificationPlatform.sendMessage(message);
             }
         }
     }

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import org.domingus.app.Domingus;
-import org.domingus.interfaces.Notificable;
+import org.domingus.interfaces.NotificationPlatform;
 
-public class DomingusApp implements Notificable{
+public class DomingusApp implements NotificationPlatform {
 	
 	public static void main(String[] args) {
 		System.out.println("Iniciando DomingusApp!!");
