@@ -19,38 +19,22 @@ public abstract class Data implements Comparable {
         this.date = date;
     }
 
+
     @Override
-    public Map<String, List<String>> detectChanges(Comparable other) {
-        Map<String, List<String>> result = new HashMap<>();
+    public Map<String, List<String>> compare(Data other) {
+        Map<String, List<String>> result = null;
 
-        if (other instanceof Data) {
-            Data otherData = (Data) other;
-            List<String> changes = new ArrayList<>();
+        List<String> changes = new ArrayList<>();
 
-            if (!this.name.equals(otherData.name)) {
-                result.put(this.name, new ArrayList<>());
-                return result;
-            }
 
-            if (!this.date.equals(otherData.date)) {
-                changes.add(this.date);
-            }
-
-            result.put(this.name, changes);
-
+        if (!this.date.equals(other.date)) {
+            result = new HashMap<>();
+            changes.add(other.date);
+            result.put(other.name, changes);
         }
 
         return result;
-    }
 
-    @Override
-    public boolean hasChanges(Comparable other) {
-        boolean result = false;
-        if (other instanceof Data) {
-            Data otherData = (Data) other;
-            result = !this.date.equals(otherData.date);
-        }
-        return result;
     }
 
     // este metodo es redundante

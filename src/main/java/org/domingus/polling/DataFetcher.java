@@ -1,28 +1,26 @@
 package org.domingus.polling;
 
 import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.*;
 
 import org.domingus.interfaces.Observable;
 import org.domingus.interfaces.Observer;
-import org.domingus.mock.Mock;
 
 public class DataFetcher implements Observer, Observable {
 
     private URL url;
-    private Mock mock;
     private Set<Observer> observers;
-    
+    private HttpService httpService;
+
     public DataFetcher( URL url){
         observers = new HashSet<>();
         this.url = url;
-        mock = new Mock();
+        this.httpService = new HttpService();
     }
 
     private Data fetchData()  {
-        //TODO resolve data url
-        return mock.getData(url.toString());
+        return httpService.sendGet(url.toString());
     }
 
     @Override
