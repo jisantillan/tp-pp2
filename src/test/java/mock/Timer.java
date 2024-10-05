@@ -1,4 +1,4 @@
-package org.domingus.test;
+package mock;
 
     public class Timer implements Runnable{
     private Integer timeInterval;

@@ -1,4 +1,4 @@
-package org.domingus.test;
+package mock;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

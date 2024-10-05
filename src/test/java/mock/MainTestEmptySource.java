@@ -1,4 +1,4 @@
-package org.domingus.test;
+package mock;
 
 import org.domingus.app.Domingus;
 import org.domingus.interfaces.NotificationPlatform;
