@@ -22,19 +22,23 @@ public class Domingus {
     private Source source;
     
     public Domingus(Source source) {
-        this.source = source;
-        this.notifier = new Notifier();
+            this.source = source;
+            this.notifier = new Notifier();
     }
 
 
-    public void init(String[] args) throws InterruptedException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public void init(String extensionPath) throws InterruptedException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         discoverer = new PlatformDiscoverer();
-        this.platforms = discoverer.discover("src\\main\\resources\\extensions\\");
+        this.platforms = discoverer.discover(extensionPath);
         platforms.forEach(notifier::addObserver);
 
         MessageAdapter messageAdapter = new MessageAdapter(notifier);
         ChangeDetector changeDetector = new ChangeDetector(messageAdapter);
-        source.suscribe(changeDetector);
+
+        if (source != null) {
+            source.suscribe(changeDetector);
+        }
+
     }
 
 
