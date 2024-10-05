@@ -1,13 +1,14 @@
 package org.domingus.app;
 
-import org.domingus.polling.AcademicData;
 
-public class AcademicOffer extends AcademicData {
+public class AcademicOffer  {
 
-    public AcademicOffer() {
-    }
-    public AcademicOffer(String name,  String date) {
-        super(name, date);
+    private Integer version;
+    public AcademicOffer(Integer version) {
+        this.version = version;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
 }
