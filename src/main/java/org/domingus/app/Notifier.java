@@ -1,26 +1,23 @@
 package org.domingus.app;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.domingus.interfaces.NotificationPlatform;
-import org.domingus.interfaces.Observer;
 
 public class Notifier {
 
-	Set<NotificationPlatform> observers = new HashSet<>();
+	Set<NotificationPlatform> platforms = new HashSet<>();
 	
     public Notifier(){}
 
-    public void addObserver(NotificationPlatform observer) {
+    public void addPlatform(NotificationPlatform observer) {
 
-        observers.add(observer);
+        platforms.add(observer);
     }
 
     public void notify(String message) {
-        observers.forEach( notificationPlatform -> notificationPlatform.sendMessage(message));
+        platforms.forEach(notificationPlatform -> notificationPlatform.sendMessage(message));
     }
 
 }

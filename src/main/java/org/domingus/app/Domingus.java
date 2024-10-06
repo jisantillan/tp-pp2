@@ -30,7 +30,7 @@ public class Domingus {
     public void init(String extensionPath) throws InterruptedException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         discoverer = new PlatformDiscoverer();
         this.platforms = discoverer.discover(extensionPath);
-        platforms.forEach(notifier::addObserver);
+        platforms.forEach(notifier::addPlatform);
 
         MessageAdapter messageAdapter = new MessageAdapter(notifier);
         ChangeDetector changeDetector = new ChangeDetector(messageAdapter);
@@ -43,7 +43,7 @@ public class Domingus {
 
 
     public void addObserver(NotificationPlatform observer) {
-    	notifier.addObserver(observer);
+    	notifier.addPlatform(observer);
     }
     
 }
