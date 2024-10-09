@@ -1,12 +1,12 @@
 package mock;
 
 import org.domingus.app.Domingus;
-import org.domingus.interfaces.NotificationPlatform;
+import org.domingus.interfaces.Notifier;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-public class MainTestEmptySource implements NotificationPlatform {
+public class MainTestEmptySource implements Notifier {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Iniciando DomingusApp");
@@ -24,7 +24,7 @@ public class MainTestEmptySource implements NotificationPlatform {
     }
 
     @Override
-    public void sendMessage(String message) {
+    public void notify(String message) {
         System.out.println("\nHa llegado una notificación");
         System.out.println(message);
     }

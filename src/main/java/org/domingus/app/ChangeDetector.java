@@ -9,16 +9,16 @@ public class ChangeDetector implements Observer {
 
     private AcademicOffer lastVersion;
     private MessageAdapter messageAdapter;
-    private AcademicOfferComparator comparator;
+    private AcademicOfferDiffer differ;
     public ChangeDetector(MessageAdapter messageAdapter) {
         this.messageAdapter = messageAdapter;
-        this.comparator = new AcademicOfferComparator();
+        this.differ = new AcademicOfferDiffer();
 	}
 
     @Override
     public void update(Object arg) {
         AcademicOffer newVersion = (AcademicOffer) arg;
-        if (lastVersion != null && comparator.hasDifferences(lastVersion, newVersion)) {
+        if (lastVersion != null && differ.hasDifferences(lastVersion, newVersion)) {
             messageAdapter.execute(listDifferences(newVersion, lastVersion));
         }
         lastVersion = newVersion;

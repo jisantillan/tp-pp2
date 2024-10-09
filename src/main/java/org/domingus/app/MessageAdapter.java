@@ -1,17 +1,16 @@
 package org.domingus.app;
 
 import java.util.List;
-import java.util.Map;
 
 public class MessageAdapter {
 
-    private Notifier notifier;
-    public MessageAdapter(Notifier notifier){
-        this.notifier = notifier;
+    private Dispatcher dispatcher;
+    public MessageAdapter(Dispatcher dispatcher){
+        this.dispatcher = dispatcher;
     }
 
     public void execute(List<String> changes){
-        notifier.notify(generateMessage(changes));
+        dispatcher.dispatch(generateMessage(changes));
     }
     private String generateMessage(List<String> changes){
         StringBuilder sb = new StringBuilder();
