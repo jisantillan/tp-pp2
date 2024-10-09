@@ -9,10 +9,10 @@ public class ChangeDetector implements Observer {
 
     private AcademicOffer lastVersion;
     private MessageAdapter messageAdapter;
-    private AcademicOfferComparator comparator;
+    private AcademicOfferDiffer comparator;
     public ChangeDetector(MessageAdapter messageAdapter) {
         this.messageAdapter = messageAdapter;
-        this.comparator = new AcademicOfferComparator();
+        this.comparator = new AcademicOfferDiffer();
 	}
 
     @Override

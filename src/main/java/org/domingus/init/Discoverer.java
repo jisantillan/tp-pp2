@@ -12,13 +12,13 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.domingus.interfaces.NotificationPlatform;
+import org.domingus.interfaces.Notifier;
 
-public class PlatformDiscoverer {
+public class Discoverer {
 
     private static final String JAR_EXTENSION = ".jar";
 
-    public Set<NotificationPlatform> discover(String directoryPath) throws FileNotFoundException {
+    public Set<Notifier> discover(String directoryPath) throws FileNotFoundException {
         File directory = new File(directoryPath);
 
         if (!directory.exists()) {
@@ -28,13 +28,13 @@ public class PlatformDiscoverer {
         return exploreDirectory(directoryPath);
     }
 
-    private Set<NotificationPlatform> exploreDirectory(String directoryPath) {
-        Set<NotificationPlatform> platforms = new HashSet<>();
-        scanFilesInPath(new File(directoryPath), platforms);
-        return platforms;
+    private Set<Notifier> exploreDirectory(String directoryPath) {
+        Set<Notifier> notifiers = new HashSet<>();
+        scanFilesInPath(new File(directoryPath), notifiers);
+        return notifiers;
     }
 
-    private void scanFilesInPath(File currentPath, Set<NotificationPlatform> platforms) {
+    private void scanFilesInPath(File currentPath, Set<Notifier> notifiers) {
         if (!currentPath.exists()) {
             return;
         }
@@ -43,16 +43,16 @@ public class PlatformDiscoverer {
             File[] files = currentPath.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    scanFilesInPath(file, platforms);
+                    scanFilesInPath(file, notifiers);
                 }
             }
         } else if (currentPath.isFile() && currentPath.getName().endsWith(JAR_EXTENSION)) {
-            platforms.addAll(discoverPlatformsInJar(currentPath));
+            notifiers.addAll(discoverNotifiersInJar(currentPath));
         }
     }
 
-    private Set<NotificationPlatform> discoverPlatformsInJar(File jarFile) {
-        Set<NotificationPlatform> platforms = new HashSet<>();
+    private Set<Notifier> discoverNotifiersInJar(File jarFile) {
+        Set<Notifier> notifiers = new HashSet<>();
 
         try (JarFile jar = new JarFile(jarFile)) {
             Enumeration<JarEntry> jarEntries = jar.entries();
@@ -60,22 +60,22 @@ public class PlatformDiscoverer {
             while (jarEntries.hasMoreElements()) {
                 JarEntry entry = jarEntries.nextElement();
                 if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
-                    platforms.add(createInstanceFromClass(jarFile, entry));
+                    notifiers.add(createInstanceFromClass(jarFile, entry));
                 }
             }
         } catch (IOException e) {
             System.err.println("Error reading jar file: " + e.getMessage());
         }
 
-        return platforms;
+        return notifiers;
     }
 
-    private NotificationPlatform createInstanceFromClass(File jarFile, JarEntry entry) {
-        NotificationPlatform instance = null;
+    private Notifier createInstanceFromClass(File jarFile, JarEntry entry) {
+        Notifier instance = null;
         try {
             Class<?> clazz = loadClassFromJar(jarFile, entry.getName());
-            if (clazz != null && NotificationPlatform.class.isAssignableFrom(clazz)) {
-                instance = (NotificationPlatform) clazz.getDeclaredConstructor().newInstance();
+            if (clazz != null && Notifier.class.isAssignableFrom(clazz)) {
+                instance = (Notifier) clazz.getDeclaredConstructor().newInstance();
             }
         } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             System.err.println("Error instantiating class: " + e.getMessage());
