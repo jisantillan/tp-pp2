@@ -22,8 +22,8 @@ public class Domingus {
     public void init(String extensionPath) throws InterruptedException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (extensionPath != null && !extensionPath.isEmpty()){
             Discoverer discoverer = new Discoverer();
-            Set<Notifier> platforms = discoverer.discover(extensionPath);
-            platforms.forEach(dispatcher::addNotifier);
+            Set<Notifier> notifiers = discoverer.discover(extensionPath);
+            notifiers.forEach(dispatcher::addNotifier);
         }
         MessageAdapter messageAdapter = new MessageAdapter(dispatcher);
         ChangeDetector changeDetector = new ChangeDetector(messageAdapter);
