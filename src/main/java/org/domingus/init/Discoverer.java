@@ -22,7 +22,7 @@ public class Discoverer {
         File directory = new File(directoryPath);
 
         if (!directory.exists()) {
-            throw new FileNotFoundException("Location does not exist: " + directoryPath);
+            return new HashSet<>();
         }
 
         return exploreDirectory(directoryPath);
