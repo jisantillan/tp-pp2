@@ -21,17 +21,22 @@ public class DomingusFactory {
     public Domingus create(Source source, String extensionPath) throws FileNotFoundException {
 
         Set<Notifier> notifiers = discoverer.discover(extensionPath);
-        Dispatcher dispatcher = new Dispatcher();
-        Domingus domingus = new Domingus(dispatcher);
-        notifiers.forEach(dispatcher::addNotifier);
+        Dispatcher dispatcher = createDispatcher(notifiers);
 
         MessageAdapter messageAdapter = new MessageAdapter(dispatcher);
         ChangeDetector changeDetector = new ChangeDetector(messageAdapter);
+
         if (source != null) {
             source.suscribe(changeDetector);
         }
 
-        return domingus;
+        return new Domingus(dispatcher);
+    }
+
+    private Dispatcher createDispatcher(Set<Notifier> notifiers) {
+        Dispatcher dispatcher = new Dispatcher();
+        notifiers.forEach(dispatcher::addNotifier);
+        return dispatcher;
     }
 
 }
