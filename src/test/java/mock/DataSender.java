@@ -24,8 +24,13 @@ public class DataSender implements Source, Runnable {
     }
 
     @Override
+    public void send(AcademicOffer academicOffer) {
+        observers.forEach((observer -> observer.update(academicOffer)));
+    }
+
+    @Override
     public void run() {
-        observers.forEach((observer -> observer.update(new AcademicOffer(version++))));
+        send(new AcademicOffer(version++));
     }
 }
 
