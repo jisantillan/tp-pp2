@@ -14,7 +14,7 @@ public class MainTest implements Notifier {
 
 		Source dataSender = new DataSender(2000);
 		DomingusFactory factory = new DomingusFactory();
-		Domingus domingus = factory.create(dataSender, "src\\main\\resources\\extensions\\");
+		Domingus domingus = factory.create(dataSender, "src\\test\\resources\\extensions\\");
 
 		domingus.addObserver(new MainTest());
 
