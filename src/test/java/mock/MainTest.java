@@ -18,6 +18,8 @@ public class MainTest implements Notifier {
 
 		domingus.addNotifier(new MainTest());
 		domingus.addCurrentNotifier("testName");
+		domingus.addCurrentNotifier("telegram");
+
 	}
 
 	@Override
