@@ -16,7 +16,9 @@ public class MainTest implements Notifier {
 		DomingusFactory factory = new DomingusFactory();
 		Domingus domingus = factory.create(dataSender, "src\\test\\resources\\extensions\\");
 
-		domingus.addObserver(new MainTest());
+		domingus.addNotifier(new MainTest());
+		domingus.addCurrentNotifier("testName");
+		domingus.addCurrentNotifier("telegram");
 
 	}
 
@@ -24,6 +26,11 @@ public class MainTest implements Notifier {
 	public void notify(String message) {
 		System.out.println("\nHa llegado una notificación");
 		System.out.println(message);
+	}
+
+	@Override
+	public String getName() {
+		return "testName";
 	}
 
 }

@@ -8,6 +8,7 @@ import org.domingus.interfaces.Notifier;
 import org.domingus.interfaces.Source;
 
 import java.io.FileNotFoundException;
+import java.util.Objects;
 import java.util.Set;
 
 public class DomingusFactory {
@@ -21,22 +22,16 @@ public class DomingusFactory {
     public Domingus create(Source source, String extensionPath) throws FileNotFoundException {
 
         Set<Notifier> notifiers = discoverer.discover(extensionPath);
-        Dispatcher dispatcher = createDispatcher(notifiers);
+        Dispatcher dispatcher = new Dispatcher();
 
         MessageAdapter messageAdapter = new MessageAdapter(dispatcher);
         ChangeDetector changeDetector = new ChangeDetector(messageAdapter);
 
-        if (source != null) {
+        if (Objects.nonNull(source)) {
             source.suscribe(changeDetector);
         }
 
-        return new Domingus(dispatcher);
-    }
-
-    private Dispatcher createDispatcher(Set<Notifier> notifiers) {
-        Dispatcher dispatcher = new Dispatcher();
-        notifiers.forEach(dispatcher::addNotifier);
-        return dispatcher;
+        return new Domingus(dispatcher, notifiers);
     }
 
 }

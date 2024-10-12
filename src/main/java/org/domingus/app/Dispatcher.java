@@ -11,9 +11,8 @@ public class Dispatcher {
 	
     public Dispatcher(){}
 
-    public void addNotifier(Notifier observer) {
-
-        notifiers.add(observer);
+    public void setNotifiers(Set<Notifier> notifiers) {
+        this.notifiers = notifiers;
     }
 
     public void dispatch(String message) {
