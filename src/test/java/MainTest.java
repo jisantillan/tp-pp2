@@ -1,5 +1,3 @@
-package mock;
-
 import java.io.FileNotFoundException;
 
 import org.domingus.app.Domingus;

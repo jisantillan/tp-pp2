@@ -1,4 +1,3 @@
-package mock;
 
     public class Timer implements Runnable{
     private Integer timeInterval;

@@ -1,5 +1,3 @@
-package mock;
-
 import org.domingus.app.Domingus;
 import org.domingus.init.DomingusFactory;
 import org.domingus.interfaces.Notifier;

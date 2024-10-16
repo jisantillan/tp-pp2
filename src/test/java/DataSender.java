@@ -1,5 +1,3 @@
-package mock;
-
 import java.util.*;
 
 import org.domingus.app.AcademicOffer;

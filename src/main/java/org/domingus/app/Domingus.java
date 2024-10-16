@@ -41,5 +41,9 @@ public class Domingus {
         return notifiers.stream()
                 .collect(Collectors.toMap(Notifier::getName, notifier -> notifier));
     }
+    public void removeCurrentNotifier(String name){
+        currentNotifiers.remove(allNotifiers.get(name));
+        dispatcher.setNotifiers(currentNotifiers);
+    }
 
 }
