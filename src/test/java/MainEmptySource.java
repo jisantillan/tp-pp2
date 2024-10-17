@@ -4,7 +4,7 @@ import org.domingus.interfaces.Notifier;
 
 import java.io.FileNotFoundException;
 
-public class MainTestEmptySource implements Notifier {
+public class MainEmptySource implements Notifier {
 
     public static void main(String[] args) throws FileNotFoundException {
         System.out.println("Iniciando DomingusApp");
@@ -12,7 +12,7 @@ public class MainTestEmptySource implements Notifier {
         DomingusFactory factory = new DomingusFactory();
         Domingus domingus = factory.create(null, "src\\main\\resources\\extensions\\");
 
-        domingus.addNotifier(new MainTest());
+        domingus.addNotifier(new Main());
 
     }
 
