@@ -1,4 +1,3 @@
-package mock;
 
 import java.io.FileNotFoundException;
 
@@ -7,7 +6,7 @@ import org.domingus.init.DomingusFactory;
 import org.domingus.interfaces.Notifier;
 import org.domingus.interfaces.Source;
 
-public class MainTest implements Notifier {
+public class Main implements Notifier {
 	
 	public static void main(String[] args) throws InterruptedException, FileNotFoundException {
 		System.out.println("Iniciando DomingusApp");
@@ -16,7 +15,7 @@ public class MainTest implements Notifier {
 		DomingusFactory factory = new DomingusFactory();
 		Domingus domingus = factory.create(dataSender, "src\\test\\resources\\extensions\\");
 
-		domingus.addObserver(new MainTest());
+		domingus.addObserver(new Main());
 
 	}
 
