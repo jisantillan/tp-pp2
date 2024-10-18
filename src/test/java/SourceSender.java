@@ -5,12 +5,12 @@ import org.domingus.app.ClassroomAssignment;
 import org.domingus.interfaces.Observer;
 import org.domingus.interfaces.Source;
 
-public class DataSender implements Source, Runnable {
+public class SourceSender implements Source, Runnable {
 
     private Set<Observer> observers;
     private int version;
 
-    public DataSender(Integer timeInterval) {
+    public SourceSender(Integer timeInterval) {
         observers = new HashSet<>();
         Timer timer = new Timer(timeInterval, this);
         Thread thread = new Thread(timer);
