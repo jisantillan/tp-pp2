@@ -1,6 +1,7 @@
 package org.domingus.app;
 
 import org.domingus.interfaces.Notifier;
+import org.domingus.interfaces.Observable;
 import org.domingus.interfaces.Observer;
 
 import java.util.Collections;
@@ -8,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Domingus {
+public class Domingus implements Observable {
 
     private Set<Observer> observers;
     private Set<Observer> currentObservers;
@@ -18,6 +19,7 @@ public class Domingus {
             this.currentObservers = new HashSet<>();
     }
 
+    @Override
     public void addObserver(Observer observer) {
         this.observers.add(observer);
     }
@@ -26,6 +28,7 @@ public class Domingus {
         this.currentObservers.add(observer);
     }
 
+    @Override
     public void notify(String message) {
         synchronized (currentObservers) {
             currentObservers.forEach(observer -> observer.update(message));
