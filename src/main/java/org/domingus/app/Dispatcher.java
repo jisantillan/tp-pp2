@@ -3,21 +3,21 @@ package org.domingus.app;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.domingus.interfaces.Notifier;
+import org.domingus.interfaces.Observer;
 
 public class Dispatcher {
 
-	Set<Notifier> notifiers = new HashSet<>();
+	Set<Observer> observers = new HashSet<>();
 	
     public Dispatcher(){}
 
-    public void addNotifier(Notifier observer) {
+    public void addObserver(Observer observer) {
 
-        notifiers.add(observer);
+        observers.add(observer);
     }
 
     public void dispatch(String message) {
-        notifiers.forEach(notifier -> notifier.notify(message));
+        observers.forEach(observer -> observer.update(message));
     }
 
 }

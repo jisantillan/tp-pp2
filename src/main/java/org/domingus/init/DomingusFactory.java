@@ -1,10 +1,7 @@
 package org.domingus.init;
 
-import org.domingus.app.ChangeDetector;
-import org.domingus.app.Dispatcher;
-import org.domingus.app.Domingus;
-import org.domingus.app.MessageAdapter;
-import org.domingus.interfaces.Notifier;
+import org.domingus.app.*;
+import org.domingus.interfaces.Observer;
 import org.domingus.interfaces.Source;
 
 import java.io.FileNotFoundException;
@@ -20,22 +17,24 @@ public class DomingusFactory {
 
     public Domingus create(Source source, String extensionPath) throws FileNotFoundException {
 
-        Set<Notifier> notifiers = discoverer.discover(extensionPath);
-        Dispatcher dispatcher = createDispatcher(notifiers);
+        Set<Observer> observers = discoverer.discover(extensionPath);
+        Dispatcher dispatcher = createDispatcher(observers);
 
         MessageAdapter messageAdapter = new MessageAdapter(dispatcher);
         ChangeDetector changeDetector = new ChangeDetector(messageAdapter);
+        ClassroomAssignmentHistory classroomAssignmentHistory = new ClassroomAssignmentHistory(changeDetector);
+        SourceListener sourceListener = new SourceListener(classroomAssignmentHistory);
 
         if (source != null) {
-            source.suscribe(changeDetector);
+            source.suscribe(sourceListener);
         }
 
         return new Domingus(dispatcher);
     }
 
-    private Dispatcher createDispatcher(Set<Notifier> notifiers) {
+    private Dispatcher createDispatcher(Set<Observer> observers) {
         Dispatcher dispatcher = new Dispatcher();
-        notifiers.forEach(dispatcher::addNotifier);
+        observers.forEach(dispatcher::addObserver);
         return dispatcher;
     }
 

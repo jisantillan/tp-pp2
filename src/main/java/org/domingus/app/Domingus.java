@@ -1,6 +1,6 @@
 package org.domingus.app;
 
-import org.domingus.interfaces.Notifier;
+import org.domingus.interfaces.Observer;
 
 public class Domingus {
 
@@ -10,8 +10,8 @@ public class Domingus {
             this.dispatcher = dispatcher;
     }
 
-    public void addObserver(Notifier observer) {
-        dispatcher.addNotifier(observer);
+    public void addObserver(Observer observer) {
+        dispatcher.addObserver(observer);
     }
-    
+
 }
