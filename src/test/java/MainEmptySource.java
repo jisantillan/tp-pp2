@@ -13,7 +13,7 @@ public class MainEmptySource implements Observer {
         Domingus domingus = factory.create(null, "src\\main\\resources\\extensions\\");
 
         domingus.addObserver(new Main());
-
+        domingus.addCurrentObserver(new Main());
     }
 
     @Override
