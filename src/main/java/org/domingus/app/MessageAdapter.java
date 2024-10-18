@@ -10,7 +10,7 @@ public class MessageAdapter {
     }
 
     public void execute(List<String> changes){
-        domingus.notifyAll(generateMessage(changes));
+        domingus.notify(generateMessage(changes));
     }
     private String generateMessage(List<String> changes){
         StringBuilder sb = new StringBuilder();

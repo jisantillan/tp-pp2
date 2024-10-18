@@ -1,9 +1,11 @@
 package org.domingus.app;
 
+import org.domingus.interfaces.Notifier;
 import org.domingus.interfaces.Observer;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Domingus {
 
@@ -12,6 +14,7 @@ public class Domingus {
 
     public Domingus() {
             this.observers = new HashSet<>();
+            this.currentObservers = new HashSet<>();
     }
 
     public void addObserver(Observer observer) {
@@ -22,8 +25,8 @@ public class Domingus {
         this.currentObservers.add(observer);
     }
 
-    public void notifyAll(String message) {
-        observers.forEach(observer -> observer.update(message));
+    public void notify(String message) {
+        currentObservers.forEach(observer -> observer.update(message));
     }
 
     public void removeCurrentObserver(Observer observer){
@@ -38,4 +41,15 @@ public class Domingus {
         return currentObservers;
     }
 
+    public Set<Observer> getCurrentNotifiers(){
+        return currentObservers.stream()
+                .filter(observer -> observer.getClass().isAnnotationPresent(Notifier.class))
+                .collect(Collectors.toSet());
+    }
+
+    public Set<Observer> getNotifiers(){
+        return observers.stream()
+                .filter(observer -> observer.getClass().isAnnotationPresent(Notifier.class))
+                .collect(Collectors.toSet());
+    }
 }
