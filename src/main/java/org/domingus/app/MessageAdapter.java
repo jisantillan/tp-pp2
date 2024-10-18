@@ -16,7 +16,7 @@ public class MessageAdapter {
         StringBuilder sb = new StringBuilder();
 
         for (String change : changes) {
-            sb.append("Se han detectado cambios en la oferta académica, nueva versión nro: ").append(change).append("\n");
+            sb.append("Se han detectado cambios en la asignación de aulas, nueva versión nro: ").append(change).append("\n");
         }
 
         return sb.toString();
