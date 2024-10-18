@@ -3,6 +3,7 @@ package org.domingus.app;
 import org.domingus.interfaces.Notifier;
 import org.domingus.interfaces.Observer;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,13 +34,6 @@ public class Domingus {
         this.currentObservers.remove(observer);
     }
 
-    public Set<Observer> getObservers(){
-        return observers;
-    }
-
-    public Set<Observer> getCurrentObservers(){
-        return currentObservers;
-    }
 
     public Set<Observer> getCurrentNotifiers(){
         return currentObservers.stream()
