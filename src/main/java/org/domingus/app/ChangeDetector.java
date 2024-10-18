@@ -1,34 +1,28 @@
 package org.domingus.app;
 
-import org.domingus.interfaces.Observer;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChangeDetector implements Observer {
+public class ChangeDetector {
 
-    private AcademicOffer lastVersion;
     private MessageAdapter messageAdapter;
-    private AcademicOfferDiffer differ;
     public ChangeDetector(MessageAdapter messageAdapter) {
         this.messageAdapter = messageAdapter;
-        this.differ = new AcademicOfferDiffer();
 	}
 
-    @Override
-    public void update(Object arg) {
-        AcademicOffer newVersion = (AcademicOffer) arg;
-        if (lastVersion != null && differ.hasDifferences(lastVersion, newVersion)) {
-            messageAdapter.execute(listDifferences(newVersion, lastVersion));
+    public void detectChanges(ClassroomAssignment previous, ClassroomAssignment current ) {
+        if (previous != null && !current.equals(previous)) {
+            messageAdapter.execute(listChanges(current, previous));
         }
-        lastVersion = newVersion;
     }
 
-    private List<String> listDifferences(AcademicOffer newVersion, AcademicOffer lastVersion){
-        List<String> differences = new ArrayList<>();
+    private List<String> listChanges(ClassroomAssignment newVersion, ClassroomAssignment lastVersion){
+        List<String> changes = new ArrayList<>();
         if (newVersion.getVersion() != lastVersion.getVersion()) {
-            differences.add(newVersion.getVersion().toString());
+            changes.add(newVersion.getVersion().toString());
         }
-        return differences ;
+        return changes ;
     }
+
+
 }

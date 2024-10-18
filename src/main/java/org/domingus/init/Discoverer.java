@@ -12,13 +12,13 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.domingus.interfaces.Notifier;
+import org.domingus.interfaces.Observer;
 
 public class Discoverer {
 
     private static final String JAR_EXTENSION = ".jar";
 
-    public Set<Notifier> discover(String directoryPath) throws FileNotFoundException {
+    public Set<Observer> discover(String directoryPath) throws FileNotFoundException {
         File directory = new File(directoryPath);
 
         if (!directory.exists()) {
@@ -28,13 +28,13 @@ public class Discoverer {
         return exploreDirectory(directoryPath);
     }
 
-    private Set<Notifier> exploreDirectory(String directoryPath) {
-        Set<Notifier> notifiers = new HashSet<>();
-        scanFilesInPath(new File(directoryPath), notifiers);
-        return notifiers;
+    private Set<Observer> exploreDirectory(String directoryPath) {
+        Set<Observer> observers = new HashSet<>();
+        scanFilesInPath(new File(directoryPath), observers);
+        return observers;
     }
 
-    private void scanFilesInPath(File currentPath, Set<Notifier> notifiers) {
+    private void scanFilesInPath(File currentPath, Set<Observer> observers) {
         if (!currentPath.exists()) {
             return;
         }
@@ -43,16 +43,16 @@ public class Discoverer {
             File[] files = currentPath.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    scanFilesInPath(file, notifiers);
+                    scanFilesInPath(file, observers);
                 }
             }
         } else if (currentPath.isFile() && currentPath.getName().endsWith(JAR_EXTENSION)) {
-            notifiers.addAll(discoverNotifiersInJar(currentPath));
+            observers.addAll(discoverObserversInJar(currentPath));
         }
     }
 
-    private Set<Notifier> discoverNotifiersInJar(File jarFile) {
-        Set<Notifier> notifiers = new HashSet<>();
+    private Set<Observer> discoverObserversInJar(File jarFile) {
+        Set<Observer> observers = new HashSet<>();
 
         try (JarFile jar = new JarFile(jarFile)) {
             Enumeration<JarEntry> jarEntries = jar.entries();
@@ -60,22 +60,22 @@ public class Discoverer {
             while (jarEntries.hasMoreElements()) {
                 JarEntry entry = jarEntries.nextElement();
                 if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
-                    notifiers.add(createInstanceFromClass(jarFile, entry));
+                    observers.add(createInstanceFromClass(jarFile, entry));
                 }
             }
         } catch (IOException e) {
             System.err.println("Error reading jar file: " + e.getMessage());
         }
 
-        return notifiers;
+        return observers;
     }
 
-    private Notifier createInstanceFromClass(File jarFile, JarEntry entry) {
-        Notifier instance = null;
+    private Observer createInstanceFromClass(File jarFile, JarEntry entry) {
+        Observer instance = null;
         try {
             Class<?> clazz = loadClassFromJar(jarFile, entry.getName());
-            if (clazz != null && Notifier.class.isAssignableFrom(clazz)) {
-                instance = (Notifier) clazz.getDeclaredConstructor().newInstance();
+            if (clazz != null && Observer.class.isAssignableFrom(clazz)) {
+                instance = (Observer) clazz.getDeclaredConstructor().newInstance();
             }
         } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             System.err.println("Error instantiating class: " + e.getMessage());
