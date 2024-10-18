@@ -27,7 +27,9 @@ public class Domingus {
     }
 
     public void notify(String message) {
-        currentObservers.forEach(observer -> observer.update(message));
+        synchronized (currentObservers) {
+            currentObservers.forEach(observer -> observer.update(message));
+        }
     }
 
     public void removeCurrentObserver(Observer observer){
