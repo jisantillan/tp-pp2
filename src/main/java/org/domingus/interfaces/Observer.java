@@ -1,5 +1,7 @@
 package org.domingus.interfaces;
 
-public interface Observer  {
-    void update(Object arg);
+public interface Observer {
+	
+     void update(Object object);
+    
 }

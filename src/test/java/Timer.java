@@ -1,5 +1,4 @@
-
-    public class Timer implements Runnable{
+ public class Timer implements Runnable{
     private Integer timeInterval;
     private Runnable runnable;
 

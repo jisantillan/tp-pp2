@@ -1,49 +1,41 @@
 package org.domingus.app;
 
-import org.domingus.interfaces.Notifier;
+import org.domingus.interfaces.Observer;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Domingus {
 
-    private Dispatcher dispatcher;
+    private Set<Observer> observers;
+    private Set<Observer> currentObservers;
 
-    private Map<String, Notifier> allNotifiers;
-    private Set<Notifier> currentNotifiers;
-
-    public Domingus( Dispatcher dispatcher, Set<Notifier> notifiers) {
-        this.dispatcher = dispatcher;
-        this.allNotifiers = setAllNotifiers(notifiers);
-        this.currentNotifiers = new HashSet<>();
+    public Domingus() {
+            this.observers = new HashSet<>();
     }
 
-    public void addNotifier(Notifier notifier) {
-        allNotifiers.put(notifier.getName(), notifier);
+    public void addObserver(Observer observer) {
+        this.observers.add(observer);
     }
 
-    public void addCurrentNotifier(String name){
-        currentNotifiers.add(allNotifiers.get(name));
-        dispatcher.setNotifiers(currentNotifiers);
+    public void addCurrentObserver(Observer observer) {
+        this.currentObservers.add(observer);
     }
 
-    public Set<String> getAllNotifiersNames(){
-        return allNotifiers.keySet();
+    public void notifyAll(String message) {
+        observers.forEach(observer -> observer.update(message));
     }
 
-    public Set<String> getCurrentNotifiersNames(){
-        return currentNotifiers.stream().map(Notifier::getName).collect(Collectors.toSet());
+    public void removeCurrentObserver(Observer observer){
+        this.currentObservers.remove(observer);
     }
 
-    private Map<String, Notifier> setAllNotifiers(Set<Notifier> notifiers){
-        return notifiers.stream()
-                .collect(Collectors.toMap(Notifier::getName, notifier -> notifier));
+    public Set<Observer> getObservers(){
+        return observers;
     }
-    public void removeCurrentNotifier(String name){
-        currentNotifiers.remove(allNotifiers.get(name));
-        dispatcher.setNotifiers(currentNotifiers);
+
+    public Set<Observer> getCurrentObservers(){
+        return currentObservers;
     }
 
 }

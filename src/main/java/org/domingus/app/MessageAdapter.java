@@ -4,13 +4,13 @@ import java.util.List;
 
 public class MessageAdapter {
 
-    private Dispatcher dispatcher;
-    public MessageAdapter(Dispatcher dispatcher){
-        this.dispatcher = dispatcher;
+    private Domingus domingus;
+    public MessageAdapter(Domingus domingus){
+        this.domingus = domingus;
     }
 
     public void execute(List<String> changes){
-        dispatcher.dispatch(generateMessage(changes));
+        domingus.notifyAll(generateMessage(changes));
     }
     private String generateMessage(List<String> changes){
         StringBuilder sb = new StringBuilder();

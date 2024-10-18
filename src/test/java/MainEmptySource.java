@@ -1,10 +1,10 @@
 import org.domingus.app.Domingus;
 import org.domingus.init.DomingusFactory;
-import org.domingus.interfaces.Notifier;
+import org.domingus.interfaces.Observer;
 
 import java.io.FileNotFoundException;
 
-public class MainEmptySource implements Notifier {
+public class MainEmptySource implements Observer {
 
     public static void main(String[] args) throws FileNotFoundException {
         System.out.println("Iniciando DomingusApp");
@@ -12,18 +12,14 @@ public class MainEmptySource implements Notifier {
         DomingusFactory factory = new DomingusFactory();
         Domingus domingus = factory.create(null, "src\\main\\resources\\extensions\\");
 
-        domingus.addNotifier(new Main());
+        domingus.addObserver(new Main());
 
     }
 
     @Override
-    public void notify(String message) {
+    public void update(Object object) {
         System.out.println("\nHa llegado una notificación");
-        System.out.println(message);
+        System.out.println(object);
     }
 
-    @Override
-    public String getName() {
-        return "testName";
-    }
 }
