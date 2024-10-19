@@ -39,16 +39,11 @@ public class Domingus implements Observable {
         this.currentObservers.remove(observer);
     }
 
-
-    public Set<Observer> getCurrentNotifiers(){
-        return currentObservers.stream()
-                .filter(observer -> observer.getClass().isAnnotationPresent(Notifier.class))
-                .collect(Collectors.toSet());
+    public Set<Observer> getObservers() {
+        return Set.copyOf(observers);
     }
 
-    public Set<Observer> getNotifiers(){
-        return observers.stream()
-                .filter(observer -> observer.getClass().isAnnotationPresent(Notifier.class))
-                .collect(Collectors.toSet());
+    public Set<Observer> getCurrentObservers() {
+        return Set.copyOf(currentObservers);
     }
 }
