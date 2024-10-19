@@ -25,7 +25,9 @@ public class Domingus implements Observable {
     }
 
     public void addCurrentObserver(Observer observer) {
-        this.currentObservers.add(observer);
+        synchronized (currentObservers) {
+            this.currentObservers.add(observer);
+        }
     }
 
     @Override
@@ -36,7 +38,9 @@ public class Domingus implements Observable {
     }
 
     public void removeCurrentObserver(Observer observer){
-        this.currentObservers.remove(observer);
+        synchronized (currentObservers) {
+            this.currentObservers.remove(observer);
+        }
     }
 
     public Set<Observer> getObservers() {
