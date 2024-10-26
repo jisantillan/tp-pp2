@@ -10,14 +10,17 @@ public class Main implements Observer {
 	public static void main(String[] args) throws FileNotFoundException {
 		System.out.println("Iniciando DomingusApp");
 
-		Source dataSender = new SourceSender(2000);
+		Source sender = new SourceSender();
+		Timer timer = new Timer(2000, (Runnable) sender);
+
 		DomingusFactory factory = new DomingusFactory();
-		Domingus domingus = factory.create(dataSender, "src\\test\\resources\\extensions\\");
+		Domingus domingus = factory.create(sender, "src\\test\\resources\\extensions\\");
 
 		Main main = new Main();
 		domingus.addObserver(main);
 		domingus.addCurrentObserver(main.getClass().getSimpleName());
 
+		timer.run();
 	}
 
 	@Override

@@ -10,11 +10,8 @@ public class SourceSender implements Source, Runnable {
     private Set<Observer> observers;
     private int version;
 
-    public SourceSender(Integer timeInterval) {
+    public SourceSender() {
         observers = new HashSet<>();
-        Timer timer = new Timer(timeInterval, this);
-        Thread thread = new Thread(timer);
-        thread.start();
     }
 
     @Override

@@ -23,15 +23,11 @@ public class Domingus implements Observable {
     }
 
     public void addCurrentObserver(String name) {
-        synchronized (currentObservers) {
-            this.currentObservers.put(name, allObservers.get(name));
-        }
+        this.currentObservers.put(name, allObservers.get(name));
     }
 
     public void removeCurrentObserver(String name){
-        synchronized (currentObservers) {
-            this.currentObservers.remove(name);
-        }
+        this.currentObservers.remove(name);
     }
 
     public Set<String> getAllObserversNames() {
