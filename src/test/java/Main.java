@@ -14,8 +14,9 @@ public class Main implements Observer {
 		DomingusFactory factory = new DomingusFactory();
 		Domingus domingus = factory.create(dataSender, "src\\test\\resources\\extensions\\");
 
-		domingus.addObserver(new Main());
-		domingus.addCurrentObserver(new Main());
+		Main main = new Main();
+		domingus.addObserver(main);
+		domingus.addCurrentObserver(main.getClass().getSimpleName());
 
 	}
 

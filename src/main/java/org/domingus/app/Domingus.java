@@ -1,51 +1,49 @@
 package org.domingus.app;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.domingus.interfaces.Observable;
 import org.domingus.interfaces.Observer;
 
 public class Domingus implements Observable {
-
-    private Set<Observer> observers;
-    private Set<Observer> currentObservers;
+    private Map<String, Observer> allObservers;
+    private Map<String, Observer> currentObservers;
 
     public Domingus() {
-            this.observers = new HashSet<>();
-            this.currentObservers = new HashSet<>();
+            this.allObservers = new HashMap<>();
+            this.currentObservers = new HashMap<>();
     }
 
     @Override
     public void addObserver(Observer observer) {
-        this.observers.add(observer);
+        this.allObservers.put(observer.getClass().getSimpleName(), observer);
     }
 
-    public void addCurrentObserver(Observer observer) {
+    public void addCurrentObserver(String name) {
         synchronized (currentObservers) {
-            this.currentObservers.add(observer);
+            this.currentObservers.put(name, allObservers.get(name));
         }
     }
 
-    @Override
-    public void notify(String message) {
+    public void removeCurrentObserver(String name){
         synchronized (currentObservers) {
-            currentObservers.forEach(observer -> observer.update(message));
+            this.currentObservers.remove(name);
         }
     }
 
-    public void removeCurrentObserver(Observer observer){
-        synchronized (currentObservers) {
-            this.currentObservers.remove(observer);
-        }
+    public Set<String> getAllObserversNames() {
+        return allObservers.keySet();
     }
 
-    public Set<Observer> getObservers() {
-        return Set.copyOf(observers);
+    public Set<String> getCurrentObserversNames() {
+        return currentObservers.keySet();
     }
 
-    public Set<Observer> getCurrentObservers() {
-        return Set.copyOf(currentObservers);
+    public Set<Observer> getCurrentObservers(){
+        return currentObservers.values().stream().collect(Collectors.toSet());
     }
     
 }
