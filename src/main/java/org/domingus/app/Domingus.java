@@ -1,13 +1,10 @@
 package org.domingus.app;
 
-import org.domingus.interfaces.Notifier;
-import org.domingus.interfaces.Observable;
-import org.domingus.interfaces.Observer;
-
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import org.domingus.interfaces.Observable;
+import org.domingus.interfaces.Observer;
 
 public class Domingus implements Observable {
 
@@ -50,4 +47,5 @@ public class Domingus implements Observable {
     public Set<Observer> getCurrentObservers() {
         return Set.copyOf(currentObservers);
     }
+    
 }

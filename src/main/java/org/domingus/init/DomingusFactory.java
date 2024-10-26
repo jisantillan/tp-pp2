@@ -1,14 +1,17 @@
 package org.domingus.init;
 
-import org.domingus.app.*;
-import org.domingus.interfaces.Observer;
-import org.domingus.interfaces.Source;
+import static java.util.Objects.nonNull;
 
 import java.io.FileNotFoundException;
-import java.util.Objects;
 import java.util.Set;
 
-import static java.util.Objects.nonNull;
+import org.domingus.app.ChangeDetector;
+import org.domingus.app.ClassroomAssignmentHistory;
+import org.domingus.app.Domingus;
+import org.domingus.app.MessageAdapter;
+import org.domingus.app.SourceListener;
+import org.domingus.interfaces.Observer;
+import org.domingus.interfaces.Source;
 
 public class DomingusFactory {
 
